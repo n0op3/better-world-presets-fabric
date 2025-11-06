@@ -1,6 +1,9 @@
 package com.github.n0op3.better_world_presets.screen;
 
+import com.github.n0op3.better_world_presets.widget.PresetListWidget;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gl.RenderPipelines;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.DirectionalLayoutWidget;
@@ -22,6 +25,8 @@ public class WorldPresetsScreen extends Screen {
     @Override
     protected void init() {
         layout.addHeader(new TextWidget(Text.literal("Preset Menu"), MinecraftClient.getInstance().textRenderer));
+
+        layout.addBody(new PresetListWidget(MinecraftClient.getInstance(), layout.getX(), layout.getY() + layout.getHeaderHeight(), layout.getWidth(), layout.getContentHeight()));
 
         DirectionalLayoutWidget layoutOfLayouts = layout.addFooter(DirectionalLayoutWidget.vertical().spacing(8));
 
