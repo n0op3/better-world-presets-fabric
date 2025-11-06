@@ -22,7 +22,14 @@ public abstract class CreateWorldScreenMixin extends Screen {
 
     @ModifyVariable(method = "init", at = @At("STORE"), ordinal = 0)
     private DirectionalLayoutWidget injected(DirectionalLayoutWidget directionalLayoutWidget) {
-        this.addDrawableChild(directionalLayoutWidget.add(TextIconButtonWidget.builder(Text.empty(), button -> MinecraftClient.getInstance().setScreen(new WorldPresetsScreen()), true).width(20).texture(Identifier.of(BetterWorldPresets.MOD_ID, "icon/menu"), 15, 15).build()));
+        this.addDrawableChild(directionalLayoutWidget.add(
+                TextIconButtonWidget.builder(
+                        Text.empty(),
+                                button -> MinecraftClient.getInstance().setScreen(new WorldPresetsScreen()),
+                                true)
+                        .width(20)
+                        .texture(Identifier.of(BetterWorldPresets.MOD_ID, "icon/menu"), 15, 15)
+                        .build()));
         return directionalLayoutWidget;
     }
 }
