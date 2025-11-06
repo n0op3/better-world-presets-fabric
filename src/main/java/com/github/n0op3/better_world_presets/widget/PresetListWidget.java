@@ -11,6 +11,8 @@ public class PresetListWidget extends AlwaysSelectedEntryListWidget<PresetListWi
     public PresetListWidget(MinecraftClient minecraftClient, int i, int j, int k, int l) {
         super(minecraftClient, i, j, k, l);
         addEntry(new Entry("Test entry"));
+        addEntry(new Entry("Test entry 2"));
+        addEntry(new Entry("Test entry 3"));
     }
 
     public static class Entry extends AlwaysSelectedEntryListWidget.Entry<Entry> implements Element {
@@ -34,7 +36,7 @@ public class PresetListWidget extends AlwaysSelectedEntryListWidget<PresetListWi
 
         @Override
         public void render(DrawContext context, int mouseX, int mouseY, boolean hovered, float deltaTicks) {
-            context.drawText(MinecraftClient.getInstance().textRenderer, name, getX(), getY(), 0xFFFFFF, true);
+            context.drawText(MinecraftClient.getInstance().textRenderer, name, getX(), getY(), 0xFFFFFFFF, true);
         }
 
         @Override

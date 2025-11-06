@@ -26,7 +26,7 @@ public class WorldPresetsScreen extends Screen {
     protected void init() {
         layout.addHeader(new TextWidget(Text.literal("Preset Menu"), MinecraftClient.getInstance().textRenderer));
 
-        layout.addBody(new PresetListWidget(MinecraftClient.getInstance(), layout.getX(), layout.getY() + layout.getHeaderHeight(), layout.getWidth(), layout.getContentHeight()));
+        layout.addBody(new PresetListWidget(MinecraftClient.getInstance(), layout.getWidth(), layout.getContentHeight(), layout.getY() + layout.getHeaderHeight(), layout.getHeaderHeight(g)));
 
         DirectionalLayoutWidget layoutOfLayouts = layout.addFooter(DirectionalLayoutWidget.vertical().spacing(8));
 
