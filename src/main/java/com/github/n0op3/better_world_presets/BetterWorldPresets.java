@@ -1,4 +1,4 @@
-package com.github.n0op3;
+package com.github.n0op3.better_world_presets;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

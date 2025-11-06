@@ -1,6 +1,6 @@
-package com.github.n0op3.mixin;
+package com.github.n0op3.better_world_presets.mixin;
 
-import com.github.n0op3.BetterWorldPresets;
+import com.github.n0op3.better_world_presets.BetterWorldPresets;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.world.CreateWorldScreen;
 import net.minecraft.client.gui.widget.DirectionalLayoutWidget;
