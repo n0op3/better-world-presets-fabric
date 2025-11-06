@@ -16,7 +16,6 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.github.n0op3.BetterWorldPresets"
 		]
 	},
 	"mixins": [
