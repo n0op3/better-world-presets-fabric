@@ -3,13 +3,13 @@
 	"id": "better-world-presets",
 	"version": "${version}",
 	"name": "Better World Presets",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "Allows the player to save and load world generation settings.",
 	"authors": [
-		"Me!"
+		"_n0op3"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "",
+		"sources": "https://github.com/n0op3/better-world-presets-fabric"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/better-world-presets/icon.png",
@@ -29,6 +29,5 @@
 		"fabric-api": "*"
 	},
 	"suggests": {
-		"another-mod": "*"
 	}
 }

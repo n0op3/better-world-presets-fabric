@@ -3,7 +3,7 @@
 	"package": "com.github.n0op3.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-		"ExampleMixin"
+      "WorldGenScreenMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
