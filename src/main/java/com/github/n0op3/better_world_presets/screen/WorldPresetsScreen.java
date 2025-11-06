@@ -2,14 +2,45 @@ package com.github.n0op3.better_world_presets.screen;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.gui.widget.DirectionalLayoutWidget;
+import net.minecraft.client.gui.widget.TextWidget;
+import net.minecraft.client.gui.widget.ThreePartsLayoutWidget;
 import net.minecraft.text.Text;
 
 public class WorldPresetsScreen extends Screen {
+
     private final Screen parent;
+    private final ThreePartsLayoutWidget layout;
 
     public WorldPresetsScreen() {
         super(Text.literal("World Presets"));
         this.parent = MinecraftClient.getInstance().currentScreen;
+        this.layout = new ThreePartsLayoutWidget(this, 33, 54);
+    }
+
+    @Override
+    protected void init() {
+        layout.addHeader(new TextWidget(Text.literal("Preset Menu"), MinecraftClient.getInstance().textRenderer));
+
+        DirectionalLayoutWidget layoutOfLayouts = layout.addFooter(DirectionalLayoutWidget.vertical().spacing(8));
+
+        DirectionalLayoutWidget directionalLayout = DirectionalLayoutWidget.horizontal().spacing(8);
+        directionalLayout.add(ButtonWidget.builder(Text.literal("Create new preset"), button -> {}).build());
+        directionalLayout.add(ButtonWidget.builder(Text.literal("Edit preset"), button -> {}).build());
+
+        directionalLayout.refreshPositions();
+        layoutOfLayouts.add(directionalLayout);
+
+        DirectionalLayoutWidget directionalLayout2 = DirectionalLayoutWidget.horizontal().spacing(8);
+        directionalLayout2.add(ButtonWidget.builder(Text.literal("Delete preset"), button -> {}).build());
+        directionalLayout2.add(ButtonWidget.builder(Text.literal("Load preset"), button -> {}).build());
+
+        directionalLayout2.refreshPositions();
+        layoutOfLayouts.add(directionalLayout2);
+
+        layout.refreshPositions();
+        layout.forEachChild(this::addDrawableChild);
     }
 
     @Override
