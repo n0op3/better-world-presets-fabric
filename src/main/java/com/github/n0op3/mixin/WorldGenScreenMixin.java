@@ -19,7 +19,8 @@ public abstract class WorldGenScreenMixin extends Screen {
 
     @ModifyVariable(method = "init", at =  @At("STORE"), ordinal = 0)
     private DirectionalLayoutWidget injected(DirectionalLayoutWidget directionalLayoutWidget) {
-        this.addDrawableChild(directionalLayoutWidget.add(ButtonWidget.builder(Text.literal("Test button"), button -> BetterWorldPresets.LOGGER.info("HELLO WORLD!!!")).width(20).build()));
+        this.addDrawableChild(directionalLayoutWidget.add(ButtonWidget.builder(Text.literal("L"), button -> BetterWorldPresets.LOGGER.info("Load a preset!")).width(20).build()));
+        this.addDrawableChild(directionalLayoutWidget.add(ButtonWidget.builder(Text.literal("S"), button -> BetterWorldPresets.LOGGER.info("Save a preset!")).width(20).build()));
         return directionalLayoutWidget;
     }
 }
