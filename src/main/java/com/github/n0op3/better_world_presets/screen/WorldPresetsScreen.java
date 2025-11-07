@@ -64,6 +64,9 @@ public class WorldPresetsScreen extends Screen {
         if (list.getSelectedOrNull() == null) {
             return;
         }
+
+        BetterWorldPresets.WORLD_PRESETS.remove(list.getSelectedOrNull().preset);
+        this.clearAndInit();
     }
 
     private void editCurrentPreset() {
