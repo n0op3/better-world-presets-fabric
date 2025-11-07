@@ -5,8 +5,13 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.text.Text;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.function.Consumer;
 
 public class PresetListWidget extends AlwaysSelectedEntryListWidget<PresetListWidget.Entry> {
+
+    private Consumer<Entry> selectionCallback;
 
     public PresetListWidget(MinecraftClient minecraftClient, int i, int j, int k, int l) {
         super(minecraftClient, i, j, k, l);
@@ -15,10 +20,23 @@ public class PresetListWidget extends AlwaysSelectedEntryListWidget<PresetListWi
         addEntry(new Entry("Test entry 3"));
     }
 
+    public PresetListWidget selectionCallback(Consumer<Entry> selectionCallback) {
+        this.selectionCallback = selectionCallback;
+        return this;
+    }
+
+    @Override
+    public void setSelected(@Nullable PresetListWidget.Entry entry) {
+        super.setSelected(entry);
+        if (this.selectionCallback != null) {
+            this.selectionCallback.accept(entry);
+        }
+    }
+
     public static class Entry extends AlwaysSelectedEntryListWidget.Entry<Entry> implements Element {
 
         private boolean focused;
-        private final String name;
+        public final String name;
 
         public Entry(String name) {
             this.name = name;
