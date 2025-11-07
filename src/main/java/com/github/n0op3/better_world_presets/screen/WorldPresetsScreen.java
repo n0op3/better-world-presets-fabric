@@ -3,7 +3,6 @@ package com.github.n0op3.better_world_presets.screen;
 import com.github.n0op3.better_world_presets.BetterWorldPresets;
 import com.github.n0op3.better_world_presets.widget.PresetListWidget;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.*;
 import net.minecraft.text.Text;
@@ -13,8 +12,7 @@ public class WorldPresetsScreen extends Screen {
     private final Screen parent;
     private PresetListWidget list;
     private ThreePartsLayoutWidget layout;
-    private boolean disabled;
-    private ButtonWidget createButton = ButtonWidget.builder(Text.literal("Create new preset"), button -> this.createNewPreset()).build();
+    private ButtonWidget createButton = ButtonWidget.builder(Text.literal("Save settings as a preset"), button -> this.saveSettingsAsPreset()).build();
     private ButtonWidget editButton = ButtonWidget.builder(Text.literal("Edit preset"), button -> this.editCurrentPreset()).build();
     private ButtonWidget deleteButton = ButtonWidget.builder(Text.literal("Delete preset"), button -> this.deleteCurrentPreset()).build();
     private ButtonWidget loadButton = ButtonWidget.builder(Text.literal("Load preset"), button -> this.loadCurrentPreset()).build();
@@ -75,12 +73,12 @@ public class WorldPresetsScreen extends Screen {
         BetterWorldPresets.LOGGER.info("Edit preset: {}", list.getSelectedOrNull().getName());
     }
 
-    private void createNewPreset() {
+    private void saveSettingsAsPreset() {
         if (list.getSelectedOrNull() == null) {
             return;
         }
 
-        BetterWorldPresets.LOGGER.info("Add a new preset");
+        BetterWorldPresets.LOGGER.info("Save settings as preset");
     }
 
     @Override
