@@ -1,14 +1,12 @@
 package com.github.n0op3.better_world_presets.screen;
 
+import com.github.n0op3.better_world_presets.BetterWorldPresets;
 import com.github.n0op3.better_world_presets.widget.PresetListWidget;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.gui.widget.DirectionalLayoutWidget;
-import net.minecraft.client.gui.widget.TextWidget;
-import net.minecraft.client.gui.widget.ThreePartsLayoutWidget;
+import net.minecraft.client.gui.widget.*;
 import net.minecraft.text.Text;
 
 public class WorldPresetsScreen extends Screen {
@@ -26,7 +24,7 @@ public class WorldPresetsScreen extends Screen {
     protected void init() {
         layout.addHeader(new TextWidget(Text.literal("Preset Menu"), MinecraftClient.getInstance().textRenderer));
 
-        layout.addBody(new PresetListWidget(MinecraftClient.getInstance(), layout.getWidth(), layout.getContentHeight(), layout.getY() + layout.getHeaderHeight(), layout.getHeaderHeight(g)));
+        layout.addBody(new PresetListWidget(MinecraftClient.getInstance(), layout.getWidth(), layout.getContentHeight(), layout.getY() + layout.getHeaderHeight(), layout.getHeaderHeight()));
 
         DirectionalLayoutWidget layoutOfLayouts = layout.addFooter(DirectionalLayoutWidget.vertical().spacing(8));
 
