@@ -1,15 +1,17 @@
 package com.github.n0op3.better_world_presets.screen;
 
 import com.github.n0op3.better_world_presets.BetterWorldPresets;
+import com.github.n0op3.better_world_presets.WorldPreset;
 import com.github.n0op3.better_world_presets.widget.PresetListWidget;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.world.CreateWorldScreen;
 import net.minecraft.client.gui.widget.*;
 import net.minecraft.text.Text;
 
 public class WorldPresetsScreen extends Screen {
 
-    private final Screen parent;
+    private final CreateWorldScreen parent;
     private PresetListWidget list;
     private ThreePartsLayoutWidget layout;
     private final ButtonWidget createButton = ButtonWidget.builder(Text.literal("Save settings as a preset"), button -> this.saveSettingsAsPreset()).build();
@@ -17,9 +19,9 @@ public class WorldPresetsScreen extends Screen {
     private final ButtonWidget deleteButton = ButtonWidget.builder(Text.literal("Delete preset"), button -> this.deleteCurrentPreset()).build();
     private final ButtonWidget loadButton = ButtonWidget.builder(Text.literal("Load preset"), button -> this.loadCurrentPreset()).build();
 
-    public WorldPresetsScreen() {
+    public WorldPresetsScreen(CreateWorldScreen parent) {
         super(Text.literal("World Presets"));
-        this.parent = MinecraftClient.getInstance().currentScreen;
+        this.parent = parent;
         this.layout = new ThreePartsLayoutWidget(this, 33, 54);
         this.deleteButton.active = false;
         this.loadButton.active = false;
@@ -79,11 +81,9 @@ public class WorldPresetsScreen extends Screen {
     }
 
     private void saveSettingsAsPreset() {
-        if (list.getSelectedOrNull() == null) {
-            return;
-        }
-
+        BetterWorldPresets.WORLD_PRESETS.add(new WorldPreset(parent.getWorldCreator().getWorldName(), parent.getWorldCreator().getGeneratorOptionsHolder().generatorOptions()));
         BetterWorldPresets.LOGGER.info("Save settings as preset");
+        this.clearAndInit();
     }
 
     @Override

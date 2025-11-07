@@ -25,7 +25,7 @@ public abstract class CreateWorldScreenMixin extends Screen {
         this.addDrawableChild(directionalLayoutWidget.add(
                 TextIconButtonWidget.builder(
                         Text.empty(),
-                                button -> MinecraftClient.getInstance().setScreen(new WorldPresetsScreen()),
+                                button -> MinecraftClient.getInstance().setScreen(new WorldPresetsScreen((CreateWorldScreen)(Object) this)),
                                 true)
                         .width(20)
                         .texture(Identifier.of(BetterWorldPresets.MOD_ID, "icon/menu"), 15, 15)
