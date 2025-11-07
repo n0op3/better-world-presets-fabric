@@ -51,11 +51,16 @@ public class WorldPresetsScreen extends Screen {
         if (entry != null) {
             this.deleteButton.active = true;
             this.loadButton.active = true;
+        } else {
+            this.deleteButton.active = false;
+            this.loadButton.active = false;
         }
     }
 
     private void loadCurrentPreset() {
-        assert list.getSelectedOrNull() != null;
+        if (list.getSelectedOrNull() == null) {
+            return;
+        }
         BetterWorldPresets.LOGGER.info("Load preset: {}", list.getSelectedOrNull().getName());
     }
 
@@ -65,6 +70,7 @@ public class WorldPresetsScreen extends Screen {
         }
 
         BetterWorldPresets.WORLD_PRESETS.remove(list.getSelectedOrNull().preset);
+        this.entrySelected(null);
         this.clearAndInit();
     }
 
