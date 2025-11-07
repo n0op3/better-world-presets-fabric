@@ -59,19 +59,12 @@ public class WorldPresetsScreen extends Screen {
     }
 
     private void loadCurrentPreset() {
-        BetterWorldPresets.LOGGER.info(list.getSelectedOrNull().name);
+        BetterWorldPresets.LOGGER.info("Load preset: {}", list.getSelectedOrNull().getName());
     }
 
     private void deleteCurrentPreset() {
         if (list.getSelectedOrNull() == null) {
             return;
-        }
-
-        for (int i = 0; i < list.children().size(); i++) {
-            if (list.children().get(i) == list.getSelectedOrNull()) {
-                list.children().remove(i);
-                break;
-            }
         }
     }
 
@@ -79,7 +72,7 @@ public class WorldPresetsScreen extends Screen {
         if (list.getSelectedOrNull() == null) {
             return;
         }
-        BetterWorldPresets.LOGGER.info("Edit preset: {}", list.getSelectedOrNull().name);
+        BetterWorldPresets.LOGGER.info("Edit preset: {}", list.getSelectedOrNull().getName());
     }
 
     private void createNewPreset() {
@@ -87,7 +80,7 @@ public class WorldPresetsScreen extends Screen {
             return;
         }
 
-        list.children().addLast(new PresetListWidget.Entry("New preset"));
+        BetterWorldPresets.LOGGER.info("Add a new preset");
     }
 
     @Override

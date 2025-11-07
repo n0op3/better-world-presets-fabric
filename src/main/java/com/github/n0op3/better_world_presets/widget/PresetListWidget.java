@@ -1,5 +1,7 @@
 package com.github.n0op3.better_world_presets.widget;
 
+import com.github.n0op3.better_world_presets.BetterWorldPresets;
+import com.github.n0op3.better_world_presets.WorldPreset;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.Element;
@@ -15,9 +17,9 @@ public class PresetListWidget extends AlwaysSelectedEntryListWidget<PresetListWi
 
     public PresetListWidget(MinecraftClient minecraftClient, int i, int j, int k, int l) {
         super(minecraftClient, i, j, k, l);
-        addEntry(new Entry("Test entry"));
-        addEntry(new Entry("Test entry 2"));
-        addEntry(new Entry("Test entry 3"));
+        for (WorldPreset preset : BetterWorldPresets.WORLD_PRESETS) {
+            addEntry(new Entry(preset));
+        }
     }
 
     public PresetListWidget selectionCallback(Consumer<Entry> selectionCallback) {
@@ -36,10 +38,10 @@ public class PresetListWidget extends AlwaysSelectedEntryListWidget<PresetListWi
     public static class Entry extends AlwaysSelectedEntryListWidget.Entry<Entry> implements Element {
 
         private boolean focused;
-        public final String name;
+        public final WorldPreset preset;
 
-        public Entry(String name) {
-            this.name = name;
+        public Entry(WorldPreset preset) {
+            this.preset = preset;
         }
 
         @Override
@@ -54,7 +56,11 @@ public class PresetListWidget extends AlwaysSelectedEntryListWidget<PresetListWi
 
         @Override
         public void render(DrawContext context, int mouseX, int mouseY, boolean hovered, float deltaTicks) {
-            context.drawText(MinecraftClient.getInstance().textRenderer, name, getX(), getY(), 0xFFFFFFFF, true);
+            context.drawText(MinecraftClient.getInstance().textRenderer, preset.worldName(), getX() + 4, getY() + 4, 0xFFFFFFFF, true);
+        }
+
+        public String getName() {
+            return this.preset.worldName();
         }
 
         @Override
