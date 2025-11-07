@@ -88,6 +88,6 @@ public class WorldPresetsScreen extends Screen {
 
     @Override
     public void close() {
-        this.client.setScreen(parent);
+        MinecraftClient.getInstance().setScreen(parent);
     }
 }
