@@ -64,6 +64,7 @@ public class WorldPresetsScreen extends Screen {
             return;
         }
         BetterWorldPresets.LOGGER.info("Load preset: {}", list.getSelectedOrNull().getName());
+        BetterWorldPresets.setCurrentPreset(list.getSelectedOrNull().preset);
     }
 
     private void deleteCurrentPreset() {
@@ -81,7 +82,7 @@ public class WorldPresetsScreen extends Screen {
     }
 
     private void saveSettingsAsPreset() {
-        BetterWorldPresets.WORLD_PRESETS.add(new WorldPreset(parent.getWorldCreator().getWorldName(), parent.getWorldCreator().getGeneratorOptionsHolder().generatorOptions()));
+        BetterWorldPresets.WORLD_PRESETS.add(new WorldPreset(parent.getWorldCreator().getWorldName(), parent.getWorldCreator().getSeed()));
         BetterWorldPresets.LOGGER.info("Save settings as preset");
         this.clearAndInit();
     }

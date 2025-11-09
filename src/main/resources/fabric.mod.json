@@ -1,32 +1,33 @@
 {
-	"schemaVersion": 1,
-	"id": "better-world-presets",
-	"version": "${version}",
-	"name": "Better World Presets",
-	"description": "Allows the player to save and load world generation settings.",
-	"authors": [
-		"_n0op3"
-	],
-	"contact": {
-		"homepage": "",
-		"sources": "https://github.com/n0op3/better-world-presets-fabric"
-	},
-	"license": "CC0-1.0",
-	"icon": "assets/better-world-presets/icon.png",
-	"environment": "*",
-	"entrypoints": {
-		"main": [
-		]
-	},
-	"mixins": [
-		"better-world-presets.mixins.json"
-	],
-	"depends": {
-		"fabricloader": ">=0.17.3",
-		"minecraft": "~1.21.10",
-		"java": ">=21",
-		"fabric-api": "*"
-	},
-	"suggests": {
-	}
+  "schemaVersion": 1,
+  "id": "better-world-presets",
+  "version": "${version}",
+  "name": "Better World Presets",
+  "description": "Allows the player to save and load world generation settings.",
+  "authors": [
+    "_n0op3"
+  ],
+  "contact": {
+    "homepage": "",
+    "sources": "https://github.com/n0op3/better-world-presets-fabric"
+  },
+  "license": "CC0-1.0",
+  "icon": "assets/better-world-presets/icon.png",
+  "environment": "*",
+  "accessWidener": "better_world_presets.accesswidener",
+  "entrypoints": {
+    "main": [
+    ]
+  },
+  "mixins": [
+    "better-world-presets.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.17.3",
+    "minecraft": "~1.21.10",
+    "java": ">=21",
+    "fabric-api": "*"
+  },
+  "suggests": {
+  }
 }
