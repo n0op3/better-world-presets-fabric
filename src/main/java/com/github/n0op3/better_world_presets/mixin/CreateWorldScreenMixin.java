@@ -49,7 +49,7 @@ public abstract class CreateWorldScreenMixin extends Screen {
             WorldCreator worldCreator = ((CreateWorldScreen) (Object) this).getWorldCreator();
             WorldPreset preset = BetterWorldPresets.getCurrentPreset();
             worldCreator.setSeed(preset.seed());
-            worldCreator.setGameMode(WorldCreator.Mode.valueOf(preset.gameMode().name()));
+            worldCreator.setGameMode(preset.gameMode());
             worldCreator.setGenerateStructures(preset.generateStructures());
             worldCreator.setBonusChestEnabled(preset.bonusChest());
             worldCreator.setCheatsEnabled(preset.commandsAllowed());

@@ -18,7 +18,7 @@ public class GameTabMixin {
     private void registerListener(CreateWorldScreen createWorldScreen, CallbackInfo ci, @Local(ordinal = 0) CyclingButtonWidget<WorldCreator.Mode> gameModeButton, @Local(ordinal = 1)CyclingButtonWidget<Difficulty> difficultyButton, @Local(ordinal = 2) CyclingButtonWidget<Boolean> commandsAllowedButton) {
         BetterWorldPresets.registerPresetChangeListener(() -> {
             ((CreateWorldScreen.GameTab) (Object) this).worldNameField.setText(BetterWorldPresets.getCurrentPreset().worldName());
-            gameModeButton.setValue(WorldCreator.Mode.valueOf(BetterWorldPresets.getCurrentPreset().gameMode().name()));
+            gameModeButton.setValue(BetterWorldPresets.getCurrentPreset().gameMode());
             difficultyButton.setValue(BetterWorldPresets.getCurrentPreset().difficulty());
             commandsAllowedButton.setValue(BetterWorldPresets.getCurrentPreset().commandsAllowed());
         });
