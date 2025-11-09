@@ -27,4 +27,8 @@ public class BetterWorldPresets {
     public static WorldPreset getCurrentPreset() {
         return CURRENT_PRESET;
     }
+
+    public static void clearListeners() {
+        PRESET_CHANGE_LISTENERS.clear();
+    }
 }
