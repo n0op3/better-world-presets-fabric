@@ -65,6 +65,7 @@ public class WorldPresetsScreen extends Screen {
         }
         BetterWorldPresets.LOGGER.info("Load preset: {}", list.getSelectedOrNull().getName());
         BetterWorldPresets.setCurrentPreset(list.getSelectedOrNull().preset);
+        this.close();
     }
 
     private void deleteCurrentPreset() {
