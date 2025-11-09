@@ -96,7 +96,6 @@ public class WorldPresetsScreen extends Screen {
                 worldCreator.getDifficulty(),
                 worldCreator.areCheatsEnabled()
         ));
-        BetterWorldPresets.LOGGER.info("Save settings as preset");
         this.clearAndInit();
     }
 

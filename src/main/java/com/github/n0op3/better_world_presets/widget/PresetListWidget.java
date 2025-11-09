@@ -65,7 +65,7 @@ public class PresetListWidget extends AlwaysSelectedEntryListWidget<PresetListWi
 
         @Override
         public Text getNarration() {
-            return null;
+            return Text.empty();
         }
     }
 }
