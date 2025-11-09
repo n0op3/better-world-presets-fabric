@@ -8,6 +8,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.world.CreateWorldScreen;
 import net.minecraft.client.gui.widget.*;
 import net.minecraft.text.Text;
+import net.minecraft.world.gen.GeneratorOptions;
 
 public class WorldPresetsScreen extends Screen {
 
@@ -83,7 +84,8 @@ public class WorldPresetsScreen extends Screen {
     }
 
     private void saveSettingsAsPreset() {
-        BetterWorldPresets.WORLD_PRESETS.add(new WorldPreset(parent.getWorldCreator().getWorldName(), parent.getWorldCreator().getSeed()));
+        GeneratorOptions generatorOptions = parent.getWorldCreator().getGeneratorOptionsHolder().generatorOptions();
+        BetterWorldPresets.WORLD_PRESETS.add(new WorldPreset(parent.getWorldCreator().getWorldName(), parent.getWorldCreator().getSeed(), generatorOptions.shouldGenerateStructures(), generatorOptions.hasBonusChest(), parent.getWorldCreator().getGameMode().defaultGameMode));
         BetterWorldPresets.LOGGER.info("Save settings as preset");
         this.clearAndInit();
     }
