@@ -6,6 +6,7 @@ import com.github.n0op3.better_world_presets.widget.PresetListWidget;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.world.CreateWorldScreen;
+import net.minecraft.client.gui.screen.world.WorldCreator;
 import net.minecraft.client.gui.widget.*;
 import net.minecraft.text.Text;
 import net.minecraft.world.gen.GeneratorOptions;
@@ -85,7 +86,16 @@ public class WorldPresetsScreen extends Screen {
 
     private void saveSettingsAsPreset() {
         GeneratorOptions generatorOptions = parent.getWorldCreator().getGeneratorOptionsHolder().generatorOptions();
-        BetterWorldPresets.WORLD_PRESETS.add(new WorldPreset(parent.getWorldCreator().getWorldName(), parent.getWorldCreator().getSeed(), generatorOptions.shouldGenerateStructures(), generatorOptions.hasBonusChest(), parent.getWorldCreator().getGameMode().defaultGameMode));
+        WorldCreator worldCreator = parent.getWorldCreator();
+        BetterWorldPresets.WORLD_PRESETS.add(new WorldPreset(
+                worldCreator.getWorldName(),
+                worldCreator.getSeed(),
+                worldCreator.shouldGenerateStructures(),
+                generatorOptions.hasBonusChest(),
+                worldCreator.getGameMode().defaultGameMode,
+                worldCreator.getDifficulty(),
+                worldCreator.areCheatsEnabled()
+        ));
         BetterWorldPresets.LOGGER.info("Save settings as preset");
         this.clearAndInit();
     }

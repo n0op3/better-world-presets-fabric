@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "better-world-presets",
+  "id": "better_world_presets",
   "version": "${version}",
   "name": "Better World Presets",
   "description": "Allows the player to save and load world generation settings.",
@@ -9,10 +9,10 @@
   ],
   "contact": {
     "homepage": "",
-    "sources": "https://github.com/n0op3/better-world-presets-fabric"
+    "sources": "https://github.com/n0op3/better_world_presets-fabric"
   },
   "license": "CC0-1.0",
-  "icon": "assets/better-world-presets/icon.png",
+  "icon": "assets/better_world_presets/icon.png",
   "environment": "*",
   "accessWidener": "better_world_presets.accesswidener",
   "entrypoints": {
@@ -20,7 +20,7 @@
     ]
   },
   "mixins": [
-    "better-world-presets.mixins.json"
+    "better_world_presets.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.17.3",

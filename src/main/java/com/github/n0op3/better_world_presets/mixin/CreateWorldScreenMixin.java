@@ -1,6 +1,7 @@
 package com.github.n0op3.better_world_presets.mixin;
 
 import com.github.n0op3.better_world_presets.BetterWorldPresets;
+import com.github.n0op3.better_world_presets.WorldPreset;
 import com.github.n0op3.better_world_presets.screen.WorldPresetsScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
@@ -10,6 +11,7 @@ import net.minecraft.client.gui.screen.world.WorldCreator;
 import net.minecraft.client.gui.widget.DirectionalLayoutWidget;
 import net.minecraft.client.gui.widget.TextIconButtonWidget;
 import net.minecraft.client.world.GeneratorOptionsHolder;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
@@ -42,10 +44,16 @@ public abstract class CreateWorldScreenMixin extends Screen {
     }
 
     @Inject(method = "<init>", at = @At("TAIL"))
-    private void registerListener(MinecraftClient client, Runnable runnable, GeneratorOptionsHolder generatorOptionsHolder, Optional defaultWorldType, OptionalLong seed, CreateWorldCallback callback, CallbackInfo ci) {
+    private void registerListener(MinecraftClient client, Runnable runnable, GeneratorOptionsHolder generatorOptionsHolder, Optional<RegistryKey<WorldPreset>> worldType, OptionalLong seed, CreateWorldCallback callback, CallbackInfo ci) {
         BetterWorldPresets.registerPresetChangeListener(() -> {
-            ((CreateWorldScreen)(Object)this).getWorldCreator().setSeed(BetterWorldPresets.getCurrentPreset().seed());
-            ((CreateWorldScreen)(Object)this).getWorldCreator().setGameMode(WorldCreator.Mode.valueOf(BetterWorldPresets.getCurrentPreset().gameMode().name()));
+            WorldCreator worldCreator = ((CreateWorldScreen) (Object) this).getWorldCreator();
+            WorldPreset preset = BetterWorldPresets.getCurrentPreset();
+            worldCreator.setSeed(preset.seed());
+            worldCreator.setGameMode(WorldCreator.Mode.valueOf(preset.gameMode().name()));
+            worldCreator.setGenerateStructures(preset.generateStructures());
+            worldCreator.setBonusChestEnabled(preset.bonusChest());
+            worldCreator.setCheatsEnabled(preset.commandsAllowed());
+            worldCreator.setDifficulty(preset.difficulty());
         });
     }
 }
