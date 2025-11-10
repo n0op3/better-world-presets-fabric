@@ -10,6 +10,7 @@ public record WorldPreset(
         boolean bonusChest,
         WorldCreator.Mode gameMode,
         Difficulty difficulty,
-        boolean commandsAllowed
+        boolean commandsAllowed,
+        WorldCreator.WorldType worldType
 ) {
 }

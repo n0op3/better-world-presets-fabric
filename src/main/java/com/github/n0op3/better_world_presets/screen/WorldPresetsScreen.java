@@ -94,7 +94,8 @@ public class WorldPresetsScreen extends Screen {
                 generatorOptions.hasBonusChest(),
                 worldCreator.getGameMode(),
                 worldCreator.getDifficulty(),
-                worldCreator.areCheatsEnabled()
+                worldCreator.areCheatsEnabled(),
+                worldCreator.getWorldType()
         ));
         this.clearAndInit();
     }
