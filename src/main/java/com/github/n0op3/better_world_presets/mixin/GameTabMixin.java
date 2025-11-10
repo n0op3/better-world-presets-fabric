@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class GameTabMixin {
 
     @Inject(method = "<init>", at = @At("TAIL"))
-    private void registerListener(CreateWorldScreen createWorldScreen, CallbackInfo ci, @Local(ordinal = 0) CyclingButtonWidget<WorldCreator.Mode> gameModeButton, @Local(ordinal = 1)CyclingButtonWidget<Difficulty> difficultyButton, @Local(ordinal = 2) CyclingButtonWidget<Boolean> commandsAllowedButton) {
+    private void registerListener(CreateWorldScreen createWorldScreen, CallbackInfo ci, @Local(ordinal = 0) CyclingButtonWidget<WorldCreator.Mode> gameModeButton, @Local(ordinal = 1) CyclingButtonWidget<Difficulty> difficultyButton, @Local(ordinal = 2) CyclingButtonWidget<Boolean> commandsAllowedButton) {
         BetterWorldPresets.registerPresetChangeListener(() -> {
             ((CreateWorldScreen.GameTab) (Object) this).worldNameField.setText(BetterWorldPresets.getCurrentPreset().worldName());
             gameModeButton.setValue(BetterWorldPresets.getCurrentPreset().gameMode());

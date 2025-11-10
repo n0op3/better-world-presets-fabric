@@ -7,20 +7,21 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.world.CreateWorldScreen;
 import net.minecraft.client.gui.screen.world.WorldCreator;
-import net.minecraft.client.gui.widget.*;
+import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.gui.widget.GridWidget;
+import net.minecraft.client.gui.widget.TextWidget;
+import net.minecraft.client.gui.widget.ThreePartsLayoutWidget;
 import net.minecraft.text.Text;
 import net.minecraft.world.gen.GeneratorOptions;
 
 public class WorldPresetsScreen extends Screen {
 
     private final CreateWorldScreen parent;
-    private PresetListWidget list;
-    private ThreePartsLayoutWidget layout;
     private final ButtonWidget createButton = ButtonWidget.builder(Text.literal("Save settings as a preset"), button -> this.saveSettingsAsPreset()).build();
     private final ButtonWidget backButton = ButtonWidget.builder(Text.literal("Back"), button -> this.back()).build();
-    private final ButtonWidget deleteButton = ButtonWidget.builder(Text.literal("Delete preset"), button -> this.deleteCurrentPreset()).build();
+    private PresetListWidget list;
     private final ButtonWidget loadButton = ButtonWidget.builder(Text.literal("Load preset"), button -> this.loadCurrentPreset()).build();
-
+    private ThreePartsLayoutWidget layout;    private final ButtonWidget deleteButton = ButtonWidget.builder(Text.literal("Delete preset"), button -> this.deleteCurrentPreset()).build();
     public WorldPresetsScreen(CreateWorldScreen parent) {
         super(Text.literal("World Presets"));
         this.parent = parent;
@@ -106,4 +107,6 @@ public class WorldPresetsScreen extends Screen {
     public void close() {
         MinecraftClient.getInstance().setScreen(parent);
     }
+
+
 }

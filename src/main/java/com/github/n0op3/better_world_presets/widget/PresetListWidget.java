@@ -37,21 +37,21 @@ public class PresetListWidget extends AlwaysSelectedEntryListWidget<PresetListWi
 
     public static class Entry extends AlwaysSelectedEntryListWidget.Entry<Entry> implements Element {
 
-        private boolean focused;
         public final WorldPreset preset;
+        private boolean focused;
 
         public Entry(WorldPreset preset) {
             this.preset = preset;
         }
 
         @Override
-        public void setFocused(boolean focused) {
-            this.focused = focused;
+        public boolean isFocused() {
+            return focused;
         }
 
         @Override
-        public boolean isFocused() {
-            return focused;
+        public void setFocused(boolean focused) {
+            this.focused = focused;
         }
 
         @Override
