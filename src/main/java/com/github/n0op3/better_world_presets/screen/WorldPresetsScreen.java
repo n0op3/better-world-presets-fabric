@@ -98,7 +98,7 @@ public class WorldPresetsScreen extends Screen {
                 worldCreator.areCheatsEnabled(),
                 worldCreator.getWorldType(),
                 worldCreator.getGameRules(),
-                worldCreator.getGeneratorOptionsHolder()
+                worldCreator.getGeneratorOptionsHolder().selectedDimensions()
         ));
         this.clearAndInit();
     }
