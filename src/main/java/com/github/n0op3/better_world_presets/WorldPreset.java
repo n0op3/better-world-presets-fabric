@@ -2,6 +2,7 @@ package com.github.n0op3.better_world_presets;
 
 import net.minecraft.client.gui.screen.world.WorldCreator;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.GameRules;
 
 public record WorldPreset(
         String worldName,
@@ -11,6 +12,7 @@ public record WorldPreset(
         WorldCreator.Mode gameMode,
         Difficulty difficulty,
         boolean commandsAllowed,
-        WorldCreator.WorldType worldType
+        WorldCreator.WorldType worldType,
+        GameRules gameRules
 ) {
 }
