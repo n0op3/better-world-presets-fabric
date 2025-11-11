@@ -4,7 +4,7 @@ import net.minecraft.client.gui.screen.world.WorldCreator;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.GameRules;
 
-public record WorldPreset(
+public record BetterWorldPreset(
         String worldName,
         String seed,
         boolean generateStructures,

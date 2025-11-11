@@ -1,7 +1,7 @@
 package com.github.n0op3.better_world_presets.screen;
 
+import com.github.n0op3.better_world_presets.BetterWorldPreset;
 import com.github.n0op3.better_world_presets.BetterWorldPresets;
-import com.github.n0op3.better_world_presets.WorldPreset;
 import com.github.n0op3.better_world_presets.widget.PresetListWidget;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
@@ -93,7 +93,7 @@ public class WorldPresetsScreen extends Screen {
     private void saveSettingsAsPreset() {
         GeneratorOptions generatorOptions = parent.getWorldCreator().getGeneratorOptionsHolder().generatorOptions();
         WorldCreator worldCreator = parent.getWorldCreator();
-        BetterWorldPresets.createPreset(new WorldPreset(
+        BetterWorldPresets.createPreset(new BetterWorldPreset(
                 worldCreator.getWorldName(),
                 worldCreator.getSeed(),
                 worldCreator.shouldGenerateStructures(),

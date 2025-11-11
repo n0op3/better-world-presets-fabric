@@ -1,7 +1,7 @@
 package com.github.n0op3.better_world_presets.widget;
 
+import com.github.n0op3.better_world_presets.BetterWorldPreset;
 import com.github.n0op3.better_world_presets.BetterWorldPresets;
-import com.github.n0op3.better_world_presets.WorldPreset;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.Element;
@@ -17,7 +17,7 @@ public class PresetListWidget extends AlwaysSelectedEntryListWidget<PresetListWi
 
     public PresetListWidget(MinecraftClient minecraftClient, int i, int j, int k, int l) {
         super(minecraftClient, i, j, k, l);
-        for (WorldPreset preset : BetterWorldPresets.getPresets()) {
+        for (BetterWorldPreset preset : BetterWorldPresets.getPresets()) {
             addEntry(new Entry(preset));
         }
     }
@@ -37,10 +37,10 @@ public class PresetListWidget extends AlwaysSelectedEntryListWidget<PresetListWi
 
     public static class Entry extends AlwaysSelectedEntryListWidget.Entry<Entry> implements Element {
 
-        public final WorldPreset preset;
+        public final BetterWorldPreset preset;
         private boolean focused;
 
-        public Entry(WorldPreset preset) {
+        public Entry(BetterWorldPreset preset) {
             this.preset = preset;
         }
 

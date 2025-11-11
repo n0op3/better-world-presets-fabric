@@ -1,7 +1,7 @@
 package com.github.n0op3.better_world_presets.config;
 
+import com.github.n0op3.better_world_presets.BetterWorldPreset;
 import com.github.n0op3.better_world_presets.BetterWorldPresets;
-import com.github.n0op3.better_world_presets.WorldPreset;
 import net.minecraft.client.gui.screen.world.WorldCreator;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtIo;
@@ -19,7 +19,7 @@ public class WorldPresetConfig {
 
     private static final Random rng = new Random();
 
-    public static void saveWorldPreset(WorldPreset preset) {
+    public static void saveWorldPreset(BetterWorldPreset preset) {
         NbtCompound nbt = presetToNbt(preset);
 
         try {
@@ -38,7 +38,7 @@ public class WorldPresetConfig {
         BetterWorldPresets.getPresets().forEach(WorldPresetConfig::saveWorldPreset);
     }
 
-    private static @NotNull NbtCompound presetToNbt(WorldPreset preset) {
+    private static @NotNull NbtCompound presetToNbt(BetterWorldPreset preset) {
         NbtCompound nbt = new NbtCompound();
         nbt.putString("world_name", preset.worldName());
         nbt.putString("seed", preset.seed());
@@ -82,7 +82,7 @@ public class WorldPresetConfig {
                         }
                     }
                 });
-                WorldPreset preset = new WorldPreset(
+                BetterWorldPreset preset = new BetterWorldPreset(
                         nbt.getString("world_name").get(),
                         nbt.getString("seed").get(),
                         nbt.getBoolean("generate_structures").get(),

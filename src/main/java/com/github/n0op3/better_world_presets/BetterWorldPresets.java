@@ -15,33 +15,33 @@ import java.util.List;
 public class BetterWorldPresets {
     public static final String MOD_ID = "better_world_presets";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-    private static final List<WorldPreset> WORLD_PRESETS = new ArrayList<>();
+    private static final List<BetterWorldPreset> WORLD_PRESETS = new ArrayList<>();
     private static final List<Runnable> PRESET_CHANGE_LISTENERS = new ArrayList<>();
-    private static WorldPreset CURRENT_PRESET;
+    private static BetterWorldPreset CURRENT_PRESET;
 
     public static void registerPresetChangeListener(Runnable listener) {
         PRESET_CHANGE_LISTENERS.add(listener);
     }
 
-    public static WorldPreset getCurrentPreset() {
+    public static BetterWorldPreset getCurrentPreset() {
         return CURRENT_PRESET;
     }
 
-    public static void setCurrentPreset(WorldPreset preset) {
+    public static void setCurrentPreset(BetterWorldPreset preset) {
         CURRENT_PRESET = preset;
         PRESET_CHANGE_LISTENERS.forEach(Runnable::run);
     }
 
-    public static void createPreset(WorldPreset preset) {
+    public static void createPreset(BetterWorldPreset preset) {
         addPreset(preset);
         WorldPresetConfig.saveWorldPreset(preset);
     }
 
-    public static void addPreset(WorldPreset preset) {
+    public static void addPreset(BetterWorldPreset preset) {
         WORLD_PRESETS.add(preset);
     }
 
-    public static void removePreset(WorldPreset preset) {
+    public static void removePreset(BetterWorldPreset preset) {
         WORLD_PRESETS.remove(preset);
     }
 
@@ -50,7 +50,7 @@ public class BetterWorldPresets {
         WorldPresetConfig.saveAllPresets();
     }
 
-    public static List<WorldPreset> getPresets() {
+    public static List<BetterWorldPreset> getPresets() {
         return Collections.unmodifiableList(WORLD_PRESETS);
     }
 
