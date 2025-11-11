@@ -12,6 +12,7 @@ import net.minecraft.client.gui.widget.GridWidget;
 import net.minecraft.client.gui.widget.TextWidget;
 import net.minecraft.client.gui.widget.ThreePartsLayoutWidget;
 import net.minecraft.text.Text;
+import net.minecraft.util.Util;
 import net.minecraft.world.gen.GeneratorOptions;
 
 public class WorldPresetsScreen extends Screen {
@@ -39,7 +40,9 @@ public class WorldPresetsScreen extends Screen {
         this.list = new PresetListWidget(MinecraftClient.getInstance(), layout.getWidth(), layout.getContentHeight(), layout.getY() + layout.getHeaderHeight(), layout.getHeaderHeight()).selectionCallback(this::entrySelected);
 
         this.layout = new ThreePartsLayoutWidget(this, 33, 54);
+
         layout.addHeader(new TextWidget(Text.literal("Preset Menu"), MinecraftClient.getInstance().textRenderer));
+        addDrawableChild(ButtonWidget.builder(Text.literal("Open presets folder"), button -> Util.getOperatingSystem().open(BetterWorldPresets.getConfigDir().toUri())).position(width - ButtonWidget.DEFAULT_WIDTH - 4, layout.getHeaderHeight() / 2 - ButtonWidget.DEFAULT_HEIGHT / 2).build());
 
         layout.addBody(this.list);
 
