@@ -2,15 +2,17 @@ package com.github.n0op3.better_world_presets.config;
 
 import com.github.n0op3.better_world_presets.BetterWorldPresets;
 import com.github.n0op3.better_world_presets.WorldPreset;
+import net.minecraft.client.gui.screen.world.WorldCreator;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtIo;
+import net.minecraft.nbt.NbtSizeTracker;
+import net.minecraft.resource.featuretoggle.FeatureSet;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.GameRules;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class WorldPresetConfig {
@@ -43,27 +45,58 @@ public class WorldPresetConfig {
         nbt.putBoolean("generate_structures", preset.generateStructures());
         nbt.putBoolean("bonus_chest", preset.bonusChest());
         nbt.putString("game_mode", preset.gameMode().defaultGameMode.name());
-        nbt.putString("difficulty", preset.difficulty().asString());
+        nbt.putString("difficulty", preset.difficulty().getName());
         nbt.putBoolean("commands_allowed", preset.commandsAllowed());
         nbt.put("game_rules", preset.gameRules().toNbt());
         return nbt;
     }
 
-    public static List<WorldPreset> loadPresets() {
-        List<WorldPreset> worldPresets = new ArrayList<>();
+    public static void loadPresets() {
         if (!Files.exists(BetterWorldPresets.getConfigDir())) {
-            return worldPresets;
+            return;
         }
 
         for (File presetFile : BetterWorldPresets.getConfigDir().toFile().listFiles()) {
             try {
-                NbtCompound nbt = NbtIo.read(presetFile.toPath());
-                // TODO
+                NbtCompound nbt = NbtIo.readCompressed(presetFile.toPath(), NbtSizeTracker.ofUnlimitedBytes());
+                GameRules gameRules = new GameRules(FeatureSet.empty());
+                NbtCompound rulesNbt = nbt.getCompound("game_rules").get();
+                gameRules.accept(new GameRules.Visitor() {
+                    @Override
+                    public void visitBoolean(GameRules.Key<GameRules.BooleanRule> key, GameRules.Type<GameRules.BooleanRule> type) {
+                        String ruleName = key.getName();
+                        if (rulesNbt.contains(ruleName)) {
+                            String valueStr = rulesNbt.getString(ruleName).get();
+                            var rule = gameRules.get(key);
+                            rule.set(Boolean.parseBoolean(valueStr), null);
+                        }
+                    }
+
+                    @Override
+                    public void visitInt(GameRules.Key<GameRules.IntRule> key, GameRules.Type<GameRules.IntRule> type) {
+                        String ruleName = key.getName();
+                        if (rulesNbt.contains(ruleName)) {
+                            String valueStr = rulesNbt.getString(ruleName).get();
+                            var rule = gameRules.get(key);
+                            rule.set(Integer.parseInt(valueStr), null);
+                        }
+                    }
+                });
+                WorldPreset preset = new WorldPreset(
+                        nbt.getString("world_name").get(),
+                        nbt.getString("seed").get(),
+                        nbt.getBoolean("generate_structures").get(),
+                        nbt.getBoolean("bonus_chest").get(),
+                        WorldCreator.Mode.valueOf(nbt.getString("game_mode").get()),
+                        Difficulty.byName(nbt.getString("difficulty").get()),
+                        nbt.getBoolean("commands_allowed").get(),
+                        gameRules
+                );
+                BetterWorldPresets.addPreset(preset);
             } catch (IOException e) {
                 BetterWorldPresets.LOGGER.error("Failed to load preset from file {}: {}", presetFile.getName(), e.getMessage());
                 e.printStackTrace();
             }
         }
-        return worldPresets;
     }
 }

@@ -93,7 +93,7 @@ public class WorldPresetsScreen extends Screen {
     private void saveSettingsAsPreset() {
         GeneratorOptions generatorOptions = parent.getWorldCreator().getGeneratorOptionsHolder().generatorOptions();
         WorldCreator worldCreator = parent.getWorldCreator();
-        BetterWorldPresets.addPreset(new WorldPreset(
+        BetterWorldPresets.createPreset(new WorldPreset(
                 worldCreator.getWorldName(),
                 worldCreator.getSeed(),
                 worldCreator.shouldGenerateStructures(),
