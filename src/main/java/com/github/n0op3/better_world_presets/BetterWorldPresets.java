@@ -1,6 +1,7 @@
 package com.github.n0op3.better_world_presets;
 
 import com.github.n0op3.better_world_presets.config.WorldPresetConfig;
+import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,12 +13,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class BetterWorldPresets {
+public class BetterWorldPresets implements ClientModInitializer {
     public static final String MOD_ID = "better_world_presets";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-    private static final List<WorldPreset> WORLD_PRESETS = new ArrayList<>();
+    private static List<WorldPreset> WORLD_PRESETS = new ArrayList<>();
     private static final List<Runnable> PRESET_CHANGE_LISTENERS = new ArrayList<>();
     private static WorldPreset CURRENT_PRESET;
+
+    @Override
+    public void onInitializeClient() {
+        WORLD_PRESETS = WorldPresetConfig.loadPresets();
+    }
 
     public static void registerPresetChangeListener(Runnable listener) {
         PRESET_CHANGE_LISTENERS.add(listener);

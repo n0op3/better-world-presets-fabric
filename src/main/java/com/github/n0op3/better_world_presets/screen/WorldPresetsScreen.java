@@ -2,7 +2,6 @@ package com.github.n0op3.better_world_presets.screen;
 
 import com.github.n0op3.better_world_presets.BetterWorldPresets;
 import com.github.n0op3.better_world_presets.WorldPreset;
-import com.github.n0op3.better_world_presets.config.WorldPresetConfig;
 import com.github.n0op3.better_world_presets.widget.PresetListWidget;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
@@ -22,7 +21,9 @@ public class WorldPresetsScreen extends Screen {
     private final ButtonWidget backButton = ButtonWidget.builder(Text.literal("Back"), button -> this.back()).build();
     private PresetListWidget list;
     private final ButtonWidget loadButton = ButtonWidget.builder(Text.literal("Load preset"), button -> this.loadCurrentPreset()).build();
-    private ThreePartsLayoutWidget layout;    private final ButtonWidget deleteButton = ButtonWidget.builder(Text.literal("Delete preset"), button -> this.deleteCurrentPreset()).build();
+    private ThreePartsLayoutWidget layout;
+    private final ButtonWidget deleteButton = ButtonWidget.builder(Text.literal("Delete preset"), button -> this.deleteCurrentPreset()).build();
+
     public WorldPresetsScreen(CreateWorldScreen parent) {
         super(Text.literal("World Presets"));
         this.parent = parent;
@@ -97,9 +98,7 @@ public class WorldPresetsScreen extends Screen {
                 worldCreator.getGameMode(),
                 worldCreator.getDifficulty(),
                 worldCreator.areCheatsEnabled(),
-                worldCreator.getWorldType(),
-                worldCreator.getGameRules(),
-                worldCreator.getGeneratorOptionsHolder().selectedDimensions()
+                worldCreator.getGameRules()
         ));
         this.clearAndInit();
     }

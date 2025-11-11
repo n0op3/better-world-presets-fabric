@@ -4,13 +4,13 @@ import com.github.n0op3.better_world_presets.BetterWorldPresets;
 import com.github.n0op3.better_world_presets.WorldPreset;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtIo;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.world.dimension.DimensionOptionsRegistryHolder;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class WorldPresetConfig {
@@ -37,8 +37,6 @@ public class WorldPresetConfig {
     }
 
     private static @NotNull NbtCompound presetToNbt(WorldPreset preset) {
-        assert preset.worldType().preset() != null;
-
         NbtCompound nbt = new NbtCompound();
         nbt.putString("world_name", preset.worldName());
         nbt.putString("seed", preset.seed());
@@ -47,10 +45,25 @@ public class WorldPresetConfig {
         nbt.putString("game_mode", preset.gameMode().defaultGameMode.name());
         nbt.putString("difficulty", preset.difficulty().asString());
         nbt.putBoolean("commands_allowed", preset.commandsAllowed());
-        nbt.putString("world_type", preset.worldType().preset().getIdAsString());
         nbt.put("game_rules", preset.gameRules().toNbt());
-        nbt.put("dimensions", DimensionOptionsRegistryHolder.CODEC.codec().encodeStart(NbtOps.INSTANCE, preset.dimensions()).getOrThrow());
         return nbt;
     }
 
+    public static List<WorldPreset> loadPresets() {
+        List<WorldPreset> worldPresets = new ArrayList<>();
+        if (!Files.exists(BetterWorldPresets.getConfigDir())) {
+            return worldPresets;
+        }
+
+        for (File presetFile : BetterWorldPresets.getConfigDir().toFile().listFiles()) {
+            try {
+                NbtCompound nbt = NbtIo.read(presetFile.toPath());
+                // TODO
+            } catch (IOException e) {
+                BetterWorldPresets.LOGGER.error("Failed to load preset from file {}: {}", presetFile.getName(), e.getMessage());
+                e.printStackTrace();
+            }
+        }
+        return worldPresets;
+    }
 }

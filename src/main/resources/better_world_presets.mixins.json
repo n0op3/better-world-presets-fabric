@@ -3,7 +3,7 @@
   "package": "com.github.n0op3.better_world_presets.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "CreateWorldScreenMixin"
+    "CreateWorldScreenMixin",
   ],
   "injectors": {
     "defaultRequire": 1

@@ -6,3 +6,4 @@ accessible class net/minecraft/client/gui/screen/world/CreateWorldScreen$GameTab
 accessible field net/minecraft/client/gui/screen/world/CreateWorldScreen$GameTab worldNameField Lnet/minecraft/client/gui/widget/TextFieldWidget;
 accessible field net/minecraft/world/gen/GeneratorOptions bonusChest Z
 accessible field net/minecraft/world/gen/GeneratorOptions generateStructures Z
+accessible field net/minecraft/world/dimension/DimensionOptions chunkGenerator Lnet/minecraft/world/gen/chunk/ChunkGenerator;

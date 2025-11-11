@@ -54,9 +54,7 @@ public abstract class CreateWorldScreenMixin extends Screen {
             worldCreator.setBonusChestEnabled(preset.bonusChest());
             worldCreator.setCheatsEnabled(preset.commandsAllowed());
             worldCreator.setDifficulty(preset.difficulty());
-            worldCreator.setWorldType(preset.worldType());
             worldCreator.setGameRules(preset.gameRules());
-            worldCreator.setGeneratorOptionsHolder(worldCreator.getGeneratorOptionsHolder().with(worldCreator.getGeneratorOptionsHolder().generatorOptions(), preset.dimensions()));
         });
     }
 }
