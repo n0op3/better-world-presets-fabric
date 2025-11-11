@@ -17,7 +17,7 @@ public class PresetListWidget extends AlwaysSelectedEntryListWidget<PresetListWi
 
     public PresetListWidget(MinecraftClient minecraftClient, int i, int j, int k, int l) {
         super(minecraftClient, i, j, k, l);
-        for (WorldPreset preset : BetterWorldPresets.WORLD_PRESETS) {
+        for (WorldPreset preset : BetterWorldPresets.getPresets()) {
             addEntry(new Entry(preset));
         }
     }
