@@ -11,7 +11,7 @@
     "homepage": "",
     "sources": "https://github.com/n0op3/better_world_presets-fabric"
   },
-  "license": "CC0-1.0",
+  "license": "GNU GPL v3",
   "icon": "assets/better_world_presets/icon.png",
   "environment": "*",
   "accessWidener": "better_world_presets.accesswidener",
