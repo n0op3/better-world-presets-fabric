@@ -5,6 +5,7 @@ import com.github.n0op3.better_world_presets.BetterWorldPresets;
 import com.github.n0op3.better_world_presets.config.WorldPresetConfig;
 import com.github.n0op3.better_world_presets.widget.PresetListWidget;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.ConfirmScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.world.CreateWorldScreen;
 import net.minecraft.client.gui.screen.world.WorldCreator;
@@ -95,8 +96,22 @@ public class WorldPresetsScreen extends Screen {
     }
 
     private void saveSettingsAsPreset() {
-        GeneratorOptions generatorOptions = parent.getWorldCreator().getGeneratorOptionsHolder().generatorOptions();
         WorldCreator worldCreator = parent.getWorldCreator();
+
+        if (BetterWorldPresets.WORLD_PRESETS.stream().anyMatch(betterWorldPreset -> betterWorldPreset.worldName().equals(worldCreator.getWorldName()))) {
+            MinecraftClient.getInstance().setScreen(new ConfirmScreen(confirmed -> {
+                if (confirmed) savePreset();
+
+                MinecraftClient.getInstance().setScreen(this);
+            }, Text.literal("This preset already exists!"), Text.literal("If you proceed, the " + worldCreator.getWorldName() + " preset will be overridden. Are you sure?")));
+        } else {
+            savePreset();
+        }
+    }
+
+    private void savePreset() {
+        WorldCreator worldCreator = parent.getWorldCreator();
+        GeneratorOptions generatorOptions = worldCreator.getGeneratorOptionsHolder().generatorOptions();
         BetterWorldPresets.addPreset(new BetterWorldPreset(
                 worldCreator.getWorldName(),
                 worldCreator.getSeed(),
@@ -110,6 +125,7 @@ public class WorldPresetsScreen extends Screen {
                 worldCreator.getWorldType()
         ));
         this.clearAndInit();
+
     }
 
     @Override
