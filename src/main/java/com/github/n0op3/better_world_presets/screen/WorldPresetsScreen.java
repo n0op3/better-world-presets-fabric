@@ -2,6 +2,7 @@ package com.github.n0op3.better_world_presets.screen;
 
 import com.github.n0op3.better_world_presets.BetterWorldPreset;
 import com.github.n0op3.better_world_presets.BetterWorldPresets;
+import com.github.n0op3.better_world_presets.config.WorldPresetConfig;
 import com.github.n0op3.better_world_presets.widget.PresetListWidget;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
@@ -35,6 +36,8 @@ public class WorldPresetsScreen extends Screen {
 
     @Override
     protected void init() {
+        WorldPresetConfig.loadPresets(parent.getWorldCreator());
+
         this.clearChildren();
 
         this.list = new PresetListWidget(MinecraftClient.getInstance(), layout.getWidth(), layout.getContentHeight(), layout.getY() + layout.getHeaderHeight(), layout.getHeaderHeight()).selectionCallback(this::entrySelected);
@@ -101,13 +104,16 @@ public class WorldPresetsScreen extends Screen {
                 worldCreator.getGameMode(),
                 worldCreator.getDifficulty(),
                 worldCreator.areCheatsEnabled(),
-                worldCreator.getGameRules()
+                worldCreator.getGameRules(),
+                worldCreator.getGeneratorOptionsHolder().selectedDimensions().getChunkGenerator(),
+                worldCreator.getGeneratorOptionsHolder().getCombinedRegistryManager()
         ));
         this.clearAndInit();
     }
 
     @Override
     public void close() {
+        WorldPresetConfig.saveAllPresets();
         MinecraftClient.getInstance().setScreen(parent);
     }
 

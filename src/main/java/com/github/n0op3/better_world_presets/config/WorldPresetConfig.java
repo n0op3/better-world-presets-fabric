@@ -2,13 +2,18 @@ package com.github.n0op3.better_world_presets.config;
 
 import com.github.n0op3.better_world_presets.BetterWorldPreset;
 import com.github.n0op3.better_world_presets.BetterWorldPresets;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.world.WorldCreator;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtIo;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.NbtSizeTracker;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryOps;
 import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.GameRules;
+import net.minecraft.world.gen.chunk.ChunkGenerator;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
@@ -32,7 +37,7 @@ public class WorldPresetConfig {
     }
 
     public static void saveAllPresets() {
-        BetterWorldPresets.getPresets().forEach(WorldPresetConfig::saveWorldPreset);
+        BetterWorldPresets.WORLD_PRESETS.forEach(WorldPresetConfig::saveWorldPreset);
     }
 
     private static @NotNull NbtCompound presetToNbt(BetterWorldPreset preset) {
@@ -45,10 +50,12 @@ public class WorldPresetConfig {
         nbt.putString("difficulty", preset.difficulty().getName());
         nbt.putBoolean("commands_allowed", preset.commandsAllowed());
         nbt.put("game_rules", preset.gameRules().toNbt());
+        nbt.put("chunk_generator", ChunkGenerator.CODEC.encodeStart(RegistryOps.of(NbtOps.INSTANCE, preset.drm().), preset.chunkGenerator()).getOrThrow());
         return nbt;
     }
 
-    public static void loadPresets() {
+    public static void loadPresets(WorldCreator worldCreator) {
+        BetterWorldPresets.WORLD_PRESETS.clear();
         if (!Files.exists(BetterWorldPresets.getConfigDir())) {
             return;
         }
@@ -87,13 +94,24 @@ public class WorldPresetConfig {
                         WorldCreator.Mode.valueOf(nbt.getString("game_mode").get()),
                         Difficulty.byName(nbt.getString("difficulty").get()),
                         nbt.getBoolean("commands_allowed").get(),
-                        gameRules
+                        gameRules,
+                        ChunkGenerator.CODEC.parse(RegistryOps.of(NbtOps.INSTANCE, worldCreator.getGeneratorOptionsHolder().getCombinedRegistryManager()), nbt.get("chunk_generator")).getOrThrow(),
+                        null
                 );
                 BetterWorldPresets.addPreset(preset);
             } catch (IOException e) {
                 BetterWorldPresets.LOGGER.error("Failed to load preset from file {}: {}", presetFile.getName(), e.getMessage());
                 e.printStackTrace();
             }
+        }
+    }
+
+    public static void deletePresetFile(String fileName) {
+        try {
+            Files.delete(BetterWorldPresets.getConfigDir().resolve(fileName + ".nbt"));
+        } catch (IOException e) {
+            BetterWorldPresets.LOGGER.error("Failed to delete a preset file: {}", e.getMessage());
+            e.printStackTrace();
         }
     }
 }
