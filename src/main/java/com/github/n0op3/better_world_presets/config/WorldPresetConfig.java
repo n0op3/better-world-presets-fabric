@@ -24,7 +24,7 @@ public class WorldPresetConfig {
 
         try {
             Files.createDirectories(BetterWorldPresets.getConfigDir());
-            var path = BetterWorldPresets.getConfigDir().resolve(preset.worldName() + "_" + rng.nextInt() + ".nbt");
+            var path = BetterWorldPresets.getConfigDir().resolve(preset.worldName() + ".nbt");
             NbtIo.writeCompressed(nbt, path);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -32,9 +32,6 @@ public class WorldPresetConfig {
     }
 
     public static void saveAllPresets() {
-        for (File presetFile : BetterWorldPresets.getConfigDir().toFile().listFiles()) {
-            presetFile.delete();
-        }
         BetterWorldPresets.getPresets().forEach(WorldPresetConfig::saveWorldPreset);
     }
 
