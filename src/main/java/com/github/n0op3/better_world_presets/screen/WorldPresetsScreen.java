@@ -32,6 +32,7 @@ public class WorldPresetsScreen extends Screen {
         this.layout = new ThreePartsLayoutWidget(this, 33, 54);
         this.deleteButton.active = false;
         this.loadButton.active = false;
+        WorldPresetConfig.WORLD_CREATOR = parent.getWorldCreator();
     }
 
     @Override

@@ -2,13 +2,11 @@ package com.github.n0op3.better_world_presets.config;
 
 import com.github.n0op3.better_world_presets.BetterWorldPreset;
 import com.github.n0op3.better_world_presets.BetterWorldPresets;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.world.WorldCreator;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.NbtSizeTracker;
-import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryOps;
 import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.world.Difficulty;
@@ -23,6 +21,8 @@ import java.util.Random;
 public class WorldPresetConfig {
 
     private static final Random rng = new Random();
+
+    public static WorldCreator WORLD_CREATOR;
 
     public static void saveWorldPreset(BetterWorldPreset preset) {
         NbtCompound nbt = presetToNbt(preset);
@@ -50,7 +50,7 @@ public class WorldPresetConfig {
         nbt.putString("difficulty", preset.difficulty().getName());
         nbt.putBoolean("commands_allowed", preset.commandsAllowed());
         nbt.put("game_rules", preset.gameRules().toNbt());
-        nbt.put("chunk_generator", ChunkGenerator.CODEC.encodeStart(RegistryOps.of(NbtOps.INSTANCE, preset.drm().), preset.chunkGenerator()).getOrThrow());
+        nbt.put("chunk_generator", ChunkGenerator.CODEC.encodeStart(RegistryOps.of(NbtOps.INSTANCE, WORLD_CREATOR.getGeneratorOptionsHolder().getCombinedRegistryManager()), preset.chunkGenerator()).getOrThrow());
         return nbt;
     }
 
