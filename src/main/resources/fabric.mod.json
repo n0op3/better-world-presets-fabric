@@ -8,8 +8,8 @@
     "_n0op3"
   ],
   "contact": {
-    "homepage": "",
-    "sources": "https://github.com/n0op3/better_world_presets-fabric"
+    "homepage": "https://modrinth.com/project/better-world-presets",
+    "sources": "https://github.com/n0op3/better-world-presets-fabric"
   },
   "license": "GNU GPL v3",
   "icon": "assets/better_world_presets/icon.png",
