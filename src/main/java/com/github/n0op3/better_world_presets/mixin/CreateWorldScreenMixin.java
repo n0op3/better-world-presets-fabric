@@ -41,6 +41,7 @@ public abstract class CreateWorldScreenMixin extends Screen {
                         .width(20)
                         .texture(Identifier.of(BetterWorldPresets.MOD_ID, "icon/menu"), 15, 15)
                         .build()));
+        BetterWorldPresets.setCurrentPreset(null);
         return directionalLayoutWidget;
     }
 
@@ -49,6 +50,8 @@ public abstract class CreateWorldScreenMixin extends Screen {
         BetterWorldPresets.registerPresetChangeListener(() -> {
             WorldCreator worldCreator = ((CreateWorldScreen) (Object) this).getWorldCreator();
             BetterWorldPreset preset = BetterWorldPresets.getCurrentPreset();
+            if (preset == null) return;
+
             worldCreator.setSeed(preset.seed());
             worldCreator.setGameMode(preset.gameMode());
             worldCreator.setGenerateStructures(preset.generateStructures());
@@ -57,7 +60,6 @@ public abstract class CreateWorldScreenMixin extends Screen {
             worldCreator.setDifficulty(preset.difficulty());
             worldCreator.setGameRules(preset.gameRules());
             worldCreator.setWorldType(preset.worldType());
-            worldCreator.getGeneratorOptionsHolder().selectedDimensions().dimensions().forEach((dimensionOptionsRegistryKey, dimensionOptions) -> dimensionOptions.chunkGenerator = preset.chunkGenerator());
         });
     }
 }

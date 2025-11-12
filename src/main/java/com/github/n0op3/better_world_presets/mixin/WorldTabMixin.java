@@ -13,6 +13,8 @@ public class WorldTabMixin {
     @Inject(method = "<init>", at = @At("TAIL"))
     private void registerListener(CreateWorldScreen createWorldScreen, CallbackInfo ci) {
         BetterWorldPresets.registerPresetChangeListener(() -> {
+            if (BetterWorldPresets.getCurrentPreset() == null) return;
+
             CreateWorldScreen.WorldTab worldTab = ((CreateWorldScreen.WorldTab) (Object) this);
             worldTab.seedField.setText(BetterWorldPresets.getCurrentPreset().seed());
         });
