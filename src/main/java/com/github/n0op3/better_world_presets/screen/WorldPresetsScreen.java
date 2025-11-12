@@ -37,7 +37,7 @@ public class WorldPresetsScreen extends Screen {
 
     @Override
     protected void init() {
-        WorldPresetConfig.loadPresets(parent.getWorldCreator());
+        WorldPresetConfig.loadPresets();
 
         this.clearChildren();
 
@@ -107,7 +107,7 @@ public class WorldPresetsScreen extends Screen {
                 worldCreator.areCheatsEnabled(),
                 worldCreator.getGameRules(),
                 worldCreator.getGeneratorOptionsHolder().selectedDimensions().getChunkGenerator(),
-                worldCreator.getGeneratorOptionsHolder().getCombinedRegistryManager()
+                worldCreator.getWorldType()
         ));
         this.clearAndInit();
     }

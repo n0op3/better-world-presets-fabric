@@ -2,7 +2,7 @@ package com.github.n0op3.better_world_presets.mixin;
 
 import com.github.n0op3.better_world_presets.BetterWorldPreset;
 import com.github.n0op3.better_world_presets.BetterWorldPresets;
-import com.github.n0op3.better_world_presets.config.WorldPresetConfig;
+
 import com.github.n0op3.better_world_presets.screen.WorldPresetsScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
@@ -56,6 +56,7 @@ public abstract class CreateWorldScreenMixin extends Screen {
             worldCreator.setCheatsEnabled(preset.commandsAllowed());
             worldCreator.setDifficulty(preset.difficulty());
             worldCreator.setGameRules(preset.gameRules());
+            worldCreator.setWorldType(preset.worldType());
             worldCreator.getGeneratorOptionsHolder().selectedDimensions().dimensions().forEach((dimensionOptionsRegistryKey, dimensionOptions) -> dimensionOptions.chunkGenerator = preset.chunkGenerator());
         });
     }
