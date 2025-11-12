@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "better_world_presets",
-  "version": "${version}",
+  "version": "1.0.0",
   "name": "Better World Presets",
   "description": "Allows the player to save and load world generation settings.",
   "authors": [
