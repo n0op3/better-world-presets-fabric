@@ -31,13 +31,9 @@ public class BetterWorldPresets {
         PRESET_CHANGE_LISTENERS.forEach(Runnable::run);
     }
 
-    public static void createPreset(BetterWorldPreset preset) {
-        addPreset(preset);
-        WorldPresetConfig.saveWorldPreset(preset);
-    }
-
     public static void addPreset(BetterWorldPreset preset) {
         WORLD_PRESETS.add(preset);
+        WorldPresetConfig.saveWorldPreset(preset);
     }
 
     public static void removePreset(BetterWorldPreset preset) {

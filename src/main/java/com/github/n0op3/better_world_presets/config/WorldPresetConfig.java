@@ -45,7 +45,7 @@ public class WorldPresetConfig {
         nbt.putString("seed", preset.seed());
         nbt.putBoolean("generate_structures", preset.generateStructures());
         nbt.putBoolean("bonus_chest", preset.bonusChest());
-        nbt.putString("game_mode", preset.gameMode().defaultGameMode.name());
+        nbt.putString("game_mode", preset.gameMode().name());
         nbt.putString("difficulty", preset.difficulty().getName());
         nbt.putBoolean("commands_allowed", preset.commandsAllowed());
         nbt.put("game_rules", preset.gameRules().toNbt());
