@@ -63,14 +63,14 @@ public class WorldPresetConfig {
         for (File presetFile : BetterWorldPresets.getConfigDir().toFile().listFiles()) {
             try {
                 NbtCompound nbt = NbtIo.readCompressed(presetFile.toPath(), NbtSizeTracker.ofUnlimitedBytes());
-                GameRules gameRules = new GameRules(FeatureSet.empty());
-                NbtCompound rulesNbt = nbt.getCompound("game_rules").get();
+                GameRules gameRules = new GameRules();
+                NbtCompound rulesNbt = nbt.getCompound("game_rules");
                 gameRules.accept(new GameRules.Visitor() {
                     @Override
                     public void visitBoolean(GameRules.Key<GameRules.BooleanRule> key, GameRules.Type<GameRules.BooleanRule> type) {
                         String ruleName = key.getName();
                         if (rulesNbt.contains(ruleName)) {
-                            String valueStr = rulesNbt.getString(ruleName).get();
+                            String valueStr = rulesNbt.getString(ruleName);
                             var rule = gameRules.get(key);
                             rule.set(Boolean.parseBoolean(valueStr), null);
                         }
@@ -80,7 +80,7 @@ public class WorldPresetConfig {
                     public void visitInt(GameRules.Key<GameRules.IntRule> key, GameRules.Type<GameRules.IntRule> type) {
                         String ruleName = key.getName();
                         if (rulesNbt.contains(ruleName)) {
-                            String valueStr = rulesNbt.getString(ruleName).get();
+                            String valueStr = rulesNbt.getString(ruleName);
                             var rule = gameRules.get(key);
                             rule.set(Integer.parseInt(valueStr), null);
                         }
@@ -88,16 +88,16 @@ public class WorldPresetConfig {
                 });
 
                 ChunkGenerator chunkGenerator = ChunkGenerator.CODEC.parse(RegistryOps.of(NbtOps.INSTANCE, WORLD_CREATOR.getGeneratorOptionsHolder().getCombinedRegistryManager()), nbt.get("chunk_generator")).getOrThrow();
-                WorldCreator.WorldType worldType = WORLD_CREATOR.getNormalWorldTypes().stream().filter(type -> Objects.equals(type.preset().getIdAsString(), nbt.getString("world_type").get())).findFirst().get();
+                WorldCreator.WorldType worldType = WORLD_CREATOR.getNormalWorldTypes().stream().filter(type -> Objects.equals(type.preset().getIdAsString(), nbt.getString("world_type"))).findFirst().get();
                 worldType.preset().value().getOverworld().get().chunkGenerator = chunkGenerator;
                 BetterWorldPreset preset = new BetterWorldPreset(
-                        nbt.getString("world_name").get(),
-                        nbt.getString("seed").get(),
-                        nbt.getBoolean("generate_structures").get(),
-                        nbt.getBoolean("bonus_chest").get(),
-                        WorldCreator.Mode.valueOf(nbt.getString("game_mode").get()),
-                        Difficulty.byName(nbt.getString("difficulty").get()),
-                        nbt.getBoolean("commands_allowed").get(),
+                        nbt.getString("world_name"),
+                        nbt.getString("seed"),
+                        nbt.getBoolean("generate_structures"),
+                        nbt.getBoolean("bonus_chest"),
+                        WorldCreator.Mode.valueOf(nbt.getString("game_mode")),
+                        Difficulty.byName(nbt.getString("difficulty")),
+                        nbt.getBoolean("commands_allowed"),
                         gameRules,
                         chunkGenerator,
                         worldType

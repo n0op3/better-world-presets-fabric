@@ -55,8 +55,8 @@ public class PresetListWidget extends AlwaysSelectedEntryListWidget<PresetListWi
         }
 
         @Override
-        public void render(DrawContext context, int mouseX, int mouseY, boolean hovered, float deltaTicks) {
-            context.drawText(MinecraftClient.getInstance().textRenderer, preset.worldName(), getX() + 4, getY() + 4, 0xFFFFFFFF, true);
+        public void render(DrawContext context, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+            context.drawText(MinecraftClient.getInstance().textRenderer, preset.worldName(), x + 4, y + 4, 0xFFFFFFFF, true);
         }
 
         public String getName() {
