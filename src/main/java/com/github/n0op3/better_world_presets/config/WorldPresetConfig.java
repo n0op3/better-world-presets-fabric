@@ -18,11 +18,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Objects;
-import java.util.Random;
 
 public class WorldPresetConfig {
-
-    private static final Random rng = new Random();
 
     public static WorldCreator WORLD_CREATOR;
 
