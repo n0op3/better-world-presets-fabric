@@ -85,9 +85,15 @@ public class BetterPresetsScreen extends Screen {
     }
 
     private void deleteCurrentPreset() {
-        BetterWorldPresets.removePreset(list.getSelectedOrNull().preset);
-        this.entrySelected(null);
-        this.clearAndInit();
+        BetterWorldPreset preset = list.getFocused().preset;
+        MinecraftClient.getInstance().setScreen(new ConfirmScreen(confirmed -> {
+            if (confirmed) {
+                BetterWorldPresets.removePreset(preset);
+                this.entrySelected(null);
+                this.clearAndInit();
+            }
+            MinecraftClient.getInstance().setScreen(this);
+        }, Text.literal("Are you sure?"), Text.literal("If you proceed, the preset \"" + list.getSelectedOrNull().preset.worldName() + "\" will be deleted. This cannot be undone!")));
     }
 
     private void renamePreset() {
