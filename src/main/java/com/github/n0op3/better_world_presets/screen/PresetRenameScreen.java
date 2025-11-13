@@ -8,6 +8,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.*;
 import net.minecraft.text.Text;
 
+import java.awt.*;
 import java.util.Objects;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_ENTER;
@@ -18,6 +19,7 @@ public class PresetRenameScreen extends Screen {
     private final DirectionalLayoutWidget layout = DirectionalLayoutWidget.vertical().spacing(5);
     private final TextFieldWidget nameFieldWidget;
     private final BetterWorldPreset preset;
+    private final ButtonWidget renameButton;
 
     protected PresetRenameScreen(BetterPresetsScreen parent, BetterWorldPreset preset) {
         super(Text.literal("Rename the preset"));
@@ -30,10 +32,11 @@ public class PresetRenameScreen extends Screen {
         this.nameFieldWidget.setText(preset.worldName());
 
         DirectionalLayoutWidget buttonLayout = DirectionalLayoutWidget.horizontal().spacing(4);
-        buttonLayout.add(ButtonWidget.builder(Text.literal("Rename"), onPress -> renameAndClose()).size(98, 20).build());
+        this.renameButton = buttonLayout.add(ButtonWidget.builder(Text.literal("Rename"), onPress -> renameAndClose()).size(98, 20).build());
         buttonLayout.add(ButtonWidget.builder(Text.literal("Cancel"), onPress -> close()).size(98, 20).build());
         this.layout.add(buttonLayout);
 
+        this.nameFieldWidget.setChangedListener(text -> renameButton.active = !text.isEmpty());
         this.layout.forEachChild(this::addDrawableChild);
         this.refreshWidgetPositions();
     }
@@ -59,6 +62,8 @@ public class PresetRenameScreen extends Screen {
     }
 
     private void renameAndClose() {
+        if (nameFieldWidget.getText().isEmpty()) return;
+
         if (BetterWorldPresets.WORLD_PRESETS.stream().anyMatch(preset -> Objects.equals(preset.worldName(), nameFieldWidget.getText()))) {
             MinecraftClient.getInstance().setScreen(new ConfirmScreen(confirmed -> {
                 this.close();
