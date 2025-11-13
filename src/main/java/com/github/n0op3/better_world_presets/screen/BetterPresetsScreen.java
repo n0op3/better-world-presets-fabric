@@ -79,13 +79,12 @@ public class BetterPresetsScreen extends Screen {
     }
 
     private void loadCurrentPreset() {
-        BetterWorldPresets.LOGGER.info("Load preset: {}", list.getSelectedOrNull().getName());
-        BetterWorldPresets.setCurrentPreset(list.getSelectedOrNull().preset);
+        BetterWorldPresets.setCurrentPreset(getSelectedPreset());
         this.close();
     }
 
     private void deleteCurrentPreset() {
-        BetterWorldPreset preset = list.getFocused().preset;
+        BetterWorldPreset preset = getSelectedPreset();
         MinecraftClient.getInstance().setScreen(new ConfirmScreen(confirmed -> {
             if (confirmed) {
                 BetterWorldPresets.removePreset(preset);
@@ -93,11 +92,11 @@ public class BetterPresetsScreen extends Screen {
                 this.clearAndInit();
             }
             MinecraftClient.getInstance().setScreen(this);
-        }, Text.literal("Are you sure?"), Text.literal("If you proceed, the preset \"" + list.getSelectedOrNull().preset.worldName() + "\" will be deleted. This cannot be undone!")));
+        }, Text.literal("Are you sure?"), Text.literal("If you proceed, the preset \"" + getSelectedPreset().worldName() + "\" will be deleted. This cannot be undone!")));
     }
 
     private void renamePreset() {
-        MinecraftClient.getInstance().setScreen(new PresetRenameScreen(this, list.getSelectedOrNull().preset));
+        MinecraftClient.getInstance().setScreen(new PresetRenameScreen(this, getSelectedPreset()));
     }
 
     private void back() {
@@ -135,6 +134,10 @@ public class BetterPresetsScreen extends Screen {
         ));
         this.clearAndInit();
 
+    }
+
+    private BetterWorldPreset getSelectedPreset() {
+        return list.getFocused().preset;
     }
 
     @Override
