@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Objects;
 
-public class WorldPresetConfig {
+public class PresetsManager {
 
     public static WorldCreator WORLD_CREATOR;
 
@@ -35,8 +35,12 @@ public class WorldPresetConfig {
         }
     }
 
+    public static void onRenamePreset(String oldName) {
+        BetterWorldPresets.getConfigDir().resolve(oldName + ".nbt").toFile().delete();
+    }
+
     public static void saveAllPresets() {
-        BetterWorldPresets.WORLD_PRESETS.forEach(WorldPresetConfig::saveWorldPreset);
+        BetterWorldPresets.WORLD_PRESETS.forEach(PresetsManager::saveWorldPreset);
     }
 
     private static @NotNull NbtCompound presetToNbt(BetterWorldPreset preset) {

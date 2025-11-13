@@ -2,7 +2,7 @@ package com.github.n0op3.better_world_presets.screen;
 
 import com.github.n0op3.better_world_presets.BetterWorldPreset;
 import com.github.n0op3.better_world_presets.BetterWorldPresets;
-import com.github.n0op3.better_world_presets.config.WorldPresetConfig;
+import com.github.n0op3.better_world_presets.config.PresetsManager;
 import com.github.n0op3.better_world_presets.widget.PresetListWidget;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ConfirmScreen;
@@ -17,28 +17,30 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Util;
 import net.minecraft.world.gen.GeneratorOptions;
 
-public class WorldPresetsScreen extends Screen {
+public class BetterPresetsScreen extends Screen {
 
     private final CreateWorldScreen parent;
+    private PresetListWidget list;
+    private ThreePartsLayoutWidget layout;
     private final ButtonWidget createButton = ButtonWidget.builder(Text.literal("Save settings as a preset"), button -> this.saveSettingsAsPreset()).build();
     private final ButtonWidget backButton = ButtonWidget.builder(Text.literal("Back"), button -> this.back()).build();
-    private PresetListWidget list;
     private final ButtonWidget loadButton = ButtonWidget.builder(Text.literal("Load preset"), button -> this.loadCurrentPreset()).build();
-    private ThreePartsLayoutWidget layout;
     private final ButtonWidget deleteButton = ButtonWidget.builder(Text.literal("Delete preset"), button -> this.deleteCurrentPreset()).build();
+    private final ButtonWidget renameButton = ButtonWidget.builder(Text.literal("Rename preset"), button -> this.renamePreset()).build();
 
-    public WorldPresetsScreen(CreateWorldScreen parent) {
+    public BetterPresetsScreen(CreateWorldScreen parent) {
         super(Text.literal("World Presets"));
         this.parent = parent;
         this.layout = new ThreePartsLayoutWidget(this, 33, 54);
         this.deleteButton.active = false;
         this.loadButton.active = false;
-        WorldPresetConfig.WORLD_CREATOR = parent.getWorldCreator();
+        this.renameButton.active = false;
+        PresetsManager.WORLD_CREATOR = parent.getWorldCreator();
     }
 
     @Override
     protected void init() {
-        WorldPresetConfig.loadPresets();
+        PresetsManager.loadPresets();
 
         this.clearChildren();
 
@@ -53,10 +55,11 @@ public class WorldPresetsScreen extends Screen {
 
         GridWidget grid = layout.addFooter(new GridWidget(0, 0).setRowSpacing(4).setColumnSpacing(8));
 
-        grid.add(createButton, 0, 0);
-        grid.add(deleteButton, 0, 1);
-        grid.add(loadButton, 1, 0);
-        grid.add(backButton, 1, 1);
+        grid.add(renameButton, 0, 0);
+        grid.add(loadButton, 0, 1);
+        grid.add(deleteButton, 0, 2);
+        grid.add(createButton, 1, 0);
+        grid.add(backButton, 1, 2);
 
         layout.refreshPositions();
         layout.forEachChild(this::addDrawableChild);
@@ -66,29 +69,28 @@ public class WorldPresetsScreen extends Screen {
         if (entry != null) {
             this.deleteButton.active = true;
             this.loadButton.active = true;
+            this.renameButton.active = true;
         } else {
             this.deleteButton.active = false;
             this.loadButton.active = false;
+            this.renameButton.active = false;
         }
     }
 
     private void loadCurrentPreset() {
-        if (list.getSelectedOrNull() == null) {
-            return;
-        }
         BetterWorldPresets.LOGGER.info("Load preset: {}", list.getSelectedOrNull().getName());
         BetterWorldPresets.setCurrentPreset(list.getSelectedOrNull().preset);
         this.close();
     }
 
     private void deleteCurrentPreset() {
-        if (list.getSelectedOrNull() == null) {
-            return;
-        }
-
         BetterWorldPresets.removePreset(list.getSelectedOrNull().preset);
         this.entrySelected(null);
         this.clearAndInit();
+    }
+
+    private void renamePreset() {
+        MinecraftClient.getInstance().setScreen(new PresetRenameScreen(this, list.getSelectedOrNull().preset));
     }
 
     private void back() {
@@ -130,9 +132,8 @@ public class WorldPresetsScreen extends Screen {
 
     @Override
     public void close() {
-        WorldPresetConfig.saveAllPresets();
+        PresetsManager.saveAllPresets();
         MinecraftClient.getInstance().setScreen(parent);
     }
-
 
 }
