@@ -35,6 +35,7 @@ public class BetterPresetsScreen extends Screen {
         this.deleteButton.active = false;
         this.loadButton.active = false;
         this.renameButton.active = false;
+        this.backButton.setWidth(80);
         PresetsManager.WORLD_CREATOR = parent.getWorldCreator();
     }
 
@@ -58,7 +59,7 @@ public class BetterPresetsScreen extends Screen {
 
         grid.add(renameButton, 0, 0);
         grid.add(loadButton, 0, 1);
-        grid.add(deleteButton, 0, 2);
+        grid.add(deleteButton, 1, 1);
         grid.add(createButton, 1, 0);
         grid.add(backButton, 1, 2);
 
