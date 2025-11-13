@@ -3,7 +3,7 @@ package com.github.n0op3.better_world_presets.mixin;
 import com.github.n0op3.better_world_presets.BetterWorldPreset;
 import com.github.n0op3.better_world_presets.BetterWorldPresets;
 
-import com.github.n0op3.better_world_presets.screen.WorldPresetsScreen;
+import com.github.n0op3.better_world_presets.screen.BetterPresetsScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.world.CreateWorldScreen;
@@ -34,7 +34,7 @@ public abstract class CreateWorldScreenMixin extends Screen {
         this.addDrawableChild(directionalLayoutWidget.add(
                 TextIconButtonWidget.builder(
                                 Text.empty(),
-                                button -> MinecraftClient.getInstance().setScreen(new WorldPresetsScreen((CreateWorldScreen) (Object) this)),
+                                button -> MinecraftClient.getInstance().setScreen(new BetterPresetsScreen((CreateWorldScreen) (Object) this)),
                                 true)
                         .width(20)
                         .texture(Identifier.of(BetterWorldPresets.MOD_ID, "icon/menu"), 15, 15)

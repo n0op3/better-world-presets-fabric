@@ -1,6 +1,6 @@
 package com.github.n0op3.better_world_presets;
 
-import com.github.n0op3.better_world_presets.config.WorldPresetConfig;
+import com.github.n0op3.better_world_presets.config.PresetsManager;
 import net.fabricmc.loader.api.FabricLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,17 +33,17 @@ public class BetterWorldPresets {
 
     public static void addPreset(BetterWorldPreset preset) {
         WORLD_PRESETS.add(preset);
-        WorldPresetConfig.saveWorldPreset(preset);
+        PresetsManager.saveWorldPreset(preset);
     }
 
     public static void removePreset(BetterWorldPreset preset) {
         WORLD_PRESETS.remove(preset);
-        WorldPresetConfig.deletePresetFile(preset.worldName());
+        PresetsManager.deletePresetFile(preset.worldName());
     }
 
     public static void onShutdown() {
         BetterWorldPresets.LOGGER.info("Saving preset data...");
-        WorldPresetConfig.saveAllPresets();
+        PresetsManager.saveAllPresets();
     }
 
     public static Path getConfigDir() {
