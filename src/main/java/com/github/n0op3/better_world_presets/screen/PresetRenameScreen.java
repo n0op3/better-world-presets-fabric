@@ -3,11 +3,11 @@ package com.github.n0op3.better_world_presets.screen;
 import com.github.n0op3.better_world_presets.BetterWorldPreset;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.DirectionalLayoutWidget;
-import net.minecraft.client.gui.widget.EmptyWidget;
-import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.client.gui.widget.TextWidget;
+import net.minecraft.client.gui.widget.*;
+import net.minecraft.client.input.KeyInput;
 import net.minecraft.text.Text;
+
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_ENTER;
 
 public class PresetRenameScreen extends Screen {
 
@@ -26,8 +26,27 @@ public class PresetRenameScreen extends Screen {
         this.nameFieldWidget = layout.add(new TextFieldWidget(MinecraftClient.getInstance().textRenderer, 200, 20, Text.literal(preset.worldName())));
         this.nameFieldWidget.setText(preset.worldName());
 
+        DirectionalLayoutWidget buttonLayout = DirectionalLayoutWidget.horizontal().spacing(4);
+        buttonLayout.add(ButtonWidget.builder(Text.literal("Rename"), onPress -> renameAndClose()).size(98, 20).build());
+        buttonLayout.add(ButtonWidget.builder(Text.literal("Cancel"), onPress -> close()).size(98, 20).build());
+        this.layout.add(buttonLayout);
+
         this.layout.forEachChild(this::addDrawableChild);
         this.refreshWidgetPositions();
+    }
+
+    @Override
+    protected void init() {
+        this.refreshWidgetPositions();
+    }
+
+    @Override
+    public boolean keyPressed(KeyInput input) {
+        if (input.key() == GLFW_KEY_ENTER) {
+            this.renameAndClose();
+            return true;
+        }
+        return super.keyPressed(input);
     }
 
     @Override
@@ -37,9 +56,13 @@ public class PresetRenameScreen extends Screen {
         this.layout.refreshPositions();
     }
 
+    private void renameAndClose() {
+        preset.setWorldName(nameFieldWidget.getText());
+        this.close();
+    }
+
     @Override
     public void close() {
-        preset.setWorldName(nameFieldWidget.getText());
         MinecraftClient.getInstance().setScreen(parent);
     }
 }

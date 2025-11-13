@@ -41,6 +41,7 @@ public class BetterPresetsScreen extends Screen {
     @Override
     protected void init() {
         PresetsManager.loadPresets();
+        entrySelected(null);
 
         this.clearChildren();
 
