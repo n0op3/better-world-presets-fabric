@@ -70,6 +70,9 @@ public class PresetRenameScreen extends Screen {
                     MinecraftClient.getInstance().setScreen(this);
                 }
             }, Text.literal("This preset already exists!"), Text.literal("Do you want to overwrite the existing preset?")));
+        } else {
+            preset.setWorldName(nameFieldWidget.getText());
+            this.close();
         }
     }
 
