@@ -61,11 +61,11 @@ public class PresetRenameScreen extends Screen {
     private void renameAndClose() {
         if (BetterWorldPresets.WORLD_PRESETS.stream().anyMatch(preset -> Objects.equals(preset.worldName(), nameFieldWidget.getText()))) {
             MinecraftClient.getInstance().setScreen(new ConfirmScreen(confirmed -> {
+                this.close();
                 if (confirmed) {
                     preset.setWorldName(nameFieldWidget.getText());
-                    this.close();
                 } else {
-                    MinecraftClient.getInstance().setScreen(this);
+                    MinecraftClient.getInstance().setScreen(new PresetRenameScreen(parent, preset));
                 }
             }, Text.literal("This preset already exists!"), Text.literal("Do you want to overwrite the existing preset?")));
         } else {
