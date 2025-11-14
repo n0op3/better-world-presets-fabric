@@ -1,6 +1,6 @@
 package com.github.n0op3.better_world_presets.mixin;
 
-import com.github.n0op3.better_world_presets.BetterWorldPresets;
+import com.github.n0op3.better_world_presets.config.PresetManager;
 import net.minecraft.world.dimension.DimensionOptionsRegistryHolder;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,8 +13,8 @@ public class DimensionOptionsRegistryHolderMixin {
 
     @Inject(method = "getChunkGenerator", at = @At("HEAD"), cancellable = true)
     private void getChunkGenerator(CallbackInfoReturnable<ChunkGenerator> cir) {
-        if (BetterWorldPresets.getCurrentPreset() != null) {
-            cir.setReturnValue(BetterWorldPresets.getCurrentPreset().chunkGenerator());
+        if (PresetManager.getCurrentPreset() != null) {
+            cir.setReturnValue(PresetManager.getCurrentPreset().chunkGenerator());
             cir.cancel();
         }
     }

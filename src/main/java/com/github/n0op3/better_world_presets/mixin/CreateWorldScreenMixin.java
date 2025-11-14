@@ -3,6 +3,7 @@ package com.github.n0op3.better_world_presets.mixin;
 import com.github.n0op3.better_world_presets.BetterWorldPreset;
 import com.github.n0op3.better_world_presets.BetterWorldPresets;
 
+import com.github.n0op3.better_world_presets.config.PresetManager;
 import com.github.n0op3.better_world_presets.screen.BetterPresetsScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
@@ -41,15 +42,15 @@ public abstract class CreateWorldScreenMixin extends Screen {
                         .width(20)
                         .texture(Identifier.of(BetterWorldPresets.MOD_ID, "icon/menu"), 15, 15)
                         .build()));
-        BetterWorldPresets.setCurrentPreset(null);
+        PresetManager.setCurrentPreset(null);
         return directionalLayoutWidget;
     }
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void registerListener(MinecraftClient client, Runnable runnable, GeneratorOptionsHolder generatorOptionsHolder, Optional<RegistryKey<BetterWorldPreset>> worldType, OptionalLong seed, CreateWorldCallback callback, CallbackInfo ci) {
-        BetterWorldPresets.registerPresetChangeListener(() -> {
+        PresetManager.registerPresetChangeListener(() -> {
             WorldCreator worldCreator = ((CreateWorldScreen) (Object) this).getWorldCreator();
-            BetterWorldPreset preset = BetterWorldPresets.getCurrentPreset();
+            BetterWorldPreset preset = PresetManager.getCurrentPreset();
             if (preset == null) return;
 
             worldCreator.setSeed(preset.seed());

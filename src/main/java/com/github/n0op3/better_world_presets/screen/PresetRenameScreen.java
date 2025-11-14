@@ -1,7 +1,7 @@
 package com.github.n0op3.better_world_presets.screen;
 
 import com.github.n0op3.better_world_presets.BetterWorldPreset;
-import com.github.n0op3.better_world_presets.BetterWorldPresets;
+import com.github.n0op3.better_world_presets.config.PresetManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ConfirmScreen;
 import net.minecraft.client.gui.screen.Screen;
@@ -9,7 +9,6 @@ import net.minecraft.client.gui.widget.*;
 import net.minecraft.client.input.KeyInput;
 import net.minecraft.text.Text;
 
-import java.awt.*;
 import java.util.Objects;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_ENTER;
@@ -66,7 +65,7 @@ public class PresetRenameScreen extends Screen {
     private void renameAndClose() {
         if (nameFieldWidget.getText().isEmpty()) return;
 
-        if (BetterWorldPresets.WORLD_PRESETS.stream().anyMatch(preset -> Objects.equals(preset.worldName(), nameFieldWidget.getText()))) {
+        if (PresetManager.WORLD_PRESETS.stream().anyMatch(preset -> Objects.equals(preset.worldName(), nameFieldWidget.getText()))) {
             MinecraftClient.getInstance().setScreen(new ConfirmScreen(confirmed -> {
                 if (confirmed) {
                     preset.setWorldName(nameFieldWidget.getText());

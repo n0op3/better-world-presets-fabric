@@ -2,7 +2,7 @@ package com.github.n0op3.better_world_presets.screen;
 
 import com.github.n0op3.better_world_presets.BetterWorldPreset;
 import com.github.n0op3.better_world_presets.BetterWorldPresets;
-import com.github.n0op3.better_world_presets.config.PresetsManager;
+import com.github.n0op3.better_world_presets.config.PresetManager;
 import com.github.n0op3.better_world_presets.widget.PresetListWidget;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ConfirmScreen;
@@ -36,12 +36,12 @@ public class BetterPresetsScreen extends Screen {
         this.loadButton.active = false;
         this.renameButton.active = false;
         this.backButton.setWidth(80);
-        PresetsManager.WORLD_CREATOR = parent.getWorldCreator();
+        PresetManager.WORLD_CREATOR = parent.getWorldCreator();
     }
 
     @Override
     protected void init() {
-        PresetsManager.loadPresets();
+        PresetManager.loadPresets();
         entrySelected(null);
 
         this.clearChildren();
@@ -80,7 +80,7 @@ public class BetterPresetsScreen extends Screen {
     }
 
     private void loadCurrentPreset() {
-        BetterWorldPresets.setCurrentPreset(getSelectedPreset());
+        PresetManager.setCurrentPreset(getSelectedPreset());
         this.close();
     }
 
@@ -88,7 +88,7 @@ public class BetterPresetsScreen extends Screen {
         BetterWorldPreset preset = getSelectedPreset();
         MinecraftClient.getInstance().setScreen(new ConfirmScreen(confirmed -> {
             if (confirmed) {
-                BetterWorldPresets.removePreset(preset);
+                PresetManager.removePreset(preset);
                 this.entrySelected(null);
                 this.clearAndInit();
             }
@@ -107,7 +107,7 @@ public class BetterPresetsScreen extends Screen {
     private void saveSettingsAsPreset() {
         WorldCreator worldCreator = parent.getWorldCreator();
 
-        if (BetterWorldPresets.WORLD_PRESETS.stream().anyMatch(betterWorldPreset -> betterWorldPreset.worldName().equals(worldCreator.getWorldName()))) {
+        if (PresetManager.WORLD_PRESETS.stream().anyMatch(betterWorldPreset -> betterWorldPreset.worldName().equals(worldCreator.getWorldName()))) {
             MinecraftClient.getInstance().setScreen(new ConfirmScreen(confirmed -> {
                 if (confirmed) savePreset();
 
@@ -121,7 +121,7 @@ public class BetterPresetsScreen extends Screen {
     private void savePreset() {
         WorldCreator worldCreator = parent.getWorldCreator();
         GeneratorOptions generatorOptions = worldCreator.getGeneratorOptionsHolder().generatorOptions();
-        BetterWorldPresets.addPreset(new BetterWorldPreset(
+        PresetManager.addPreset(new BetterWorldPreset(
                 worldCreator.getWorldName(),
                 worldCreator.getSeed(),
                 worldCreator.shouldGenerateStructures(),
@@ -143,7 +143,7 @@ public class BetterPresetsScreen extends Screen {
 
     @Override
     public void close() {
-        PresetsManager.saveAllPresets();
+        PresetManager.saveAllPresets();
         MinecraftClient.getInstance().setScreen(parent);
     }
 

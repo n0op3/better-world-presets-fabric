@@ -1,6 +1,6 @@
 package com.github.n0op3.better_world_presets;
 
-import com.github.n0op3.better_world_presets.config.PresetsManager;
+import com.github.n0op3.better_world_presets.config.PresetManager;
 import net.minecraft.client.gui.screen.world.WorldCreator;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.GameRules;
@@ -36,9 +36,9 @@ public class BetterWorldPreset {
     }
 
     public void setWorldName(String worldName) {
-        PresetsManager.onRenamePreset(this.worldName);
+        PresetManager.onRenamePreset(this.worldName);
         this.worldName = worldName;
-        PresetsManager.saveWorldPreset(this);
+        PresetManager.saveWorldPreset(this);
     }
 
     public String seed() {

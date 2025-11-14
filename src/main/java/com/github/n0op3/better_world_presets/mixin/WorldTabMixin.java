@@ -1,6 +1,6 @@
 package com.github.n0op3.better_world_presets.mixin;
 
-import com.github.n0op3.better_world_presets.BetterWorldPresets;
+import com.github.n0op3.better_world_presets.config.PresetManager;
 import net.minecraft.client.gui.screen.world.CreateWorldScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -12,11 +12,11 @@ public class WorldTabMixin {
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void registerListener(CreateWorldScreen createWorldScreen, CallbackInfo ci) {
-        BetterWorldPresets.registerPresetChangeListener(() -> {
-            if (BetterWorldPresets.getCurrentPreset() == null) return;
+        PresetManager.registerPresetChangeListener(() -> {
+            if (PresetManager.getCurrentPreset() == null) return;
 
             CreateWorldScreen.WorldTab worldTab = ((CreateWorldScreen.WorldTab) (Object) this);
-            worldTab.seedField.setText(BetterWorldPresets.getCurrentPreset().seed());
+            worldTab.seedField.setText(PresetManager.getCurrentPreset().seed());
         });
     }
 
