@@ -17,10 +17,15 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class PresetsManager {
+public class PresetManager {
 
+    public static final List<BetterWorldPreset> WORLD_PRESETS = new ArrayList<>();
+    private static final List<Runnable> PRESET_CHANGE_LISTENERS = new ArrayList<>();
+    private static BetterWorldPreset CURRENT_PRESET;
     public static WorldCreator WORLD_CREATOR;
 
     public static void saveWorldPreset(BetterWorldPreset preset) {
@@ -40,7 +45,7 @@ public class PresetsManager {
     }
 
     public static void saveAllPresets() {
-        BetterWorldPresets.WORLD_PRESETS.forEach(PresetsManager::saveWorldPreset);
+        WORLD_PRESETS.forEach(PresetManager::saveWorldPreset);
     }
 
     private static @NotNull NbtCompound presetToNbt(BetterWorldPreset preset) {
@@ -59,7 +64,7 @@ public class PresetsManager {
     }
 
     public static void loadPresets() {
-        BetterWorldPresets.WORLD_PRESETS.clear();
+        WORLD_PRESETS.clear();
         if (!Files.exists(BetterWorldPresets.getConfigDir())) {
             return;
         }
@@ -106,7 +111,7 @@ public class PresetsManager {
                         chunkGenerator,
                         worldType
                 );
-                BetterWorldPresets.addPreset(preset);
+                addPreset(preset);
             } catch (IOException e) {
                 BetterWorldPresets.LOGGER.error("Failed to load preset fromfile {}: {}", presetFile.getName(), e.getMessage());
                 e.printStackTrace();
@@ -122,4 +127,33 @@ public class PresetsManager {
             e.printStackTrace();
         }
     }
+
+    public static void registerPresetChangeListener(Runnable listener) {
+        PRESET_CHANGE_LISTENERS.add(listener);
+    }
+
+    public static BetterWorldPreset getCurrentPreset() {
+        return CURRENT_PRESET;
+    }
+
+    public static void setCurrentPreset(BetterWorldPreset preset) {
+        CURRENT_PRESET = preset;
+        PRESET_CHANGE_LISTENERS.forEach(Runnable::run);
+    }
+
+    public static void addPreset(BetterWorldPreset preset) {
+        WORLD_PRESETS.add(preset);
+        PresetManager.saveWorldPreset(preset);
+    }
+
+    public static void removePreset(BetterWorldPreset preset) {
+        WORLD_PRESETS.remove(preset);
+        PresetManager.deletePresetFile(preset.worldName());
+    }
+
+    public static void onShutdown() {
+        BetterWorldPresets.LOGGER.info("Saving preset data...");
+        PresetManager.saveAllPresets();
+    }
+
 }
