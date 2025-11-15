@@ -113,7 +113,7 @@ public class PresetManager {
                 );
                 addPreset(preset);
             } catch (IOException e) {
-                BetterWorldPresets.LOGGER.error("Failed to load preset fromfile {}: {}", presetFile.getName(), e.getMessage());
+                BetterWorldPresets.LOGGER.error("Failed to load preset from file {}: {}", presetFile.getName(), e.getMessage());
                 e.printStackTrace();
             }
         }
