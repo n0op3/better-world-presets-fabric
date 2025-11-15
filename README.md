@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/n0op3/better-world-presets-fabric/blob/main/src/main/resources/assets/better_world_presets/icon.png?raw=true" width="25%" alt="icon"/>
+  <img src="https://github.com/n0op3/better-world-presets-fabric/blob/1.21.10/src/main/resources/assets/better_world_presets/icon.png?raw=true" width="25%" alt="icon"/>
 </p>
 
 # Better World Presets for Fabric
