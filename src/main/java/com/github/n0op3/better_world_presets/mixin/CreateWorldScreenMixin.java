@@ -6,6 +6,7 @@ import com.github.n0op3.better_world_presets.config.PresetManager;
 import com.github.n0op3.better_world_presets.screen.BetterPresetsScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.world.CreateWorldCallback;
 import net.minecraft.client.gui.screen.world.CreateWorldScreen;
 import net.minecraft.client.gui.screen.world.WorldCreator;
 import net.minecraft.client.gui.widget.DirectionalLayoutWidget;
@@ -44,7 +45,7 @@ public abstract class CreateWorldScreenMixin extends Screen {
     }
 
     @Inject(method = "<init>", at = @At("TAIL"))
-    private void registerListener(MinecraftClient client, Screen parent, GeneratorOptionsHolder generatorOptionsHolder, Optional defaultWorldType, OptionalLong seed, CallbackInfo ci) {
+    private void registerListener(MinecraftClient client, Runnable runnable, GeneratorOptionsHolder generatorOptionsHolder, Optional defaultWorldType, OptionalLong seed, CreateWorldCallback callback, CallbackInfo ci) {
         PresetManager.registerPresetChangeListener(() -> {
             WorldCreator worldCreator = ((CreateWorldScreen) (Object) this).getWorldCreator();
             BetterWorldPreset preset = PresetManager.getCurrentPreset();
